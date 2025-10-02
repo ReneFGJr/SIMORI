@@ -1,0 +1,351 @@
+CRITICAL - 2025-10-02 15:03:56 --> ErrorException: Cannot declare class App\Controllers\Repositorios, because the name is already in use
+[Method: GET, Route: repositorios]
+in APPPATH\Models\RepositorioModel.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-10-02 15:04:10 --> ErrorException: Cannot declare class App\Controllers\Repositorios, because the name is already in use
+[Method: GET, Route: repositorios]
+in APPPATH\Models\RepositorioModel.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-10-02 15:05:02 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), '', 3306, '', 0)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#9 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#6 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-10-02 15:05:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user ''@'localhost' (using password: YES)
+[Method: GET, Route: repositorios]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `oai_identify`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-02 15:05:03 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), '', 3306, '', 0)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#9 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#6 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-10-02 15:05:03 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user ''@'localhost' (using password: YES)
+[Method: GET, Route: repositorios]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `oai_identify`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-02 15:05:06 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), '', 3306, '', 0)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#9 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#6 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-10-02 15:05:06 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user ''@'localhost' (using password: YES)
+[Method: GET, Route: repositorios]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `oai_identify`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-02 15:05:26 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), '', 3306, '', 0)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#9 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: YES) in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#6 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-10-02 15:05:26 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user ''@'localhost' (using password: YES)
+[Method: GET, Route: repositorios]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `oai_identify`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-02 15:06:14 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'somori' in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'somori', 3306, '', 0)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#9 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'somori' in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#6 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-10-02 15:06:14 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'somori'
+[Method: GET, Route: repositorios]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `oai_identify`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-02 15:06:22 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'simori' in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'simori', 3306, '', 0)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#9 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'simori' in D:\www\SIMORI\v1\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 D:\www\SIMORI\v1\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\www\SIMORI\v1\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\www\SIMORI\v1\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\www\SIMORI\v1\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\www\SIMORI\v1\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#5 D:\www\SIMORI\v1\app\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+#6 D:\www\SIMORI\v1\system\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+#7 D:\www\SIMORI\v1\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+#8 D:\www\SIMORI\v1\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\www\SIMORI\v1\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 D:\www\SIMORI\v1\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\www\SIMORI\v1\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-10-02 15:06:22 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'simori'
+[Method: GET, Route: repositorios]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `oai_identify`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\Repositorios.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-02 15:08:16 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "repositorios/create.php"
+[Method: GET, Route: repositorios/create]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('repositorios/create.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('repositorios/create', [], true)
+ 3 APPPATH\Controllers\Repositorios.php(18): view('repositorios/create')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->create()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-02 15:10:07 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "repositorios/edit.php"
+[Method: GET, Route: repositorios/edit/1]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('repositorios/edit.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('repositorios/edit', [], true)
+ 3 APPPATH\Controllers\Repositorios.php(25): view('repositorios/edit', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->edit('1')
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-02 15:14:25 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "repositorios/sets.php"
+[Method: GET, Route: repositorios/view/2]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('repositorios/sets.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('repositorios/sets', [], true)
+ 3 APPPATH\Controllers\Repositorios.php(58): view('repositorios/sets', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->views('2')
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-02 15:29:14 --> Error: Call to undefined function App\Controllers\pre()
+[Method: GET, Route: repositorios/view/2]
+in APPPATH\Controllers\Repositorios.php on line 59.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->views('2')
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-02 15:30:17 --> ValueError: max(): Argument #1 ($value) must contain at least one element
+[Method: GET, Route: repositorios/view/2]
+in APPPATH\Controllers\Repositorios.php on line 59.
+ 1 APPPATH\Controllers\Repositorios.php(59): max([])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Repositorios->views('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Repositorios))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
