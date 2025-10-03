@@ -1,0 +1,36 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: url("/assets/background/sunshine.png") no-repeat center center fixed;
+    background-size: cover; /* faz a imagem ocupar toda a tela */
+}
+
+.bg-simori {
+    background-color: #e56103; /* Cor personalizada */
+}
+
+.full {
+    width: 100%;
+}
+
+.link {
+    color: #e56103;
+    text-decoration: none;
+    cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline;
+}
+
+.container_simori {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+    border-radius: 30px;
+    background-color: aliceblue;
+}

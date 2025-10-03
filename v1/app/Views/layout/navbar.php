@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-simori mb-4">
     <div class="container">
         <a class="navbar-brand fw-bold" href="<?= base_url('/') ?>">
             <i class="bi bi-diagram-3"></i> SiMoRI

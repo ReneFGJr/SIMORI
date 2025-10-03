@@ -1,9 +1,11 @@
+<!-- Rodapé -->
+<footer class="bg-light text-center text-muted py-3 border-top">
+    <div class="container">
+        <small>© <?= date('Y') ?> - SiMoRI | Desenvolvido em CodeIgniter 4 + Bootstrap 5</small>
+    </div>
+</footer>
+
 <style>
-    body {
-        background: url("<?= base_url('/assets/background/sunshine.png'); ?>") no-repeat center center;
-        background-size: cover;
-        z-index: 0;
-    }
 
     /* Camadas que se movimentam */
     .layer {
@@ -40,8 +42,6 @@
             transform: translateX(-50%);
         }
     }
-
-
 
     /* Logo centralizada */
     .logo {

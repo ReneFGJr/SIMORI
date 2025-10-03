@@ -1,15 +1,4 @@
-<?= $this->extend('layout/main') ?>
-<?= $this->section('welcome') ?>
-<div class="container mt-5">
-    <!-- Título -->
-    <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold text-primary">
-            SiMoRI - Sistema de Monitoramento de Repositórios Institucionais
-        </h1>
-        <p class="lead text-muted">
-            Plataforma para análise, acompanhamento e avaliação de repositórios de documentos e dados acadêmicos.
-        </p>
-    </div>
+<div class="container container_simori mt-5">
 
     <!-- Cards principais -->
     <div class="row g-4">
@@ -20,7 +9,7 @@
                     <i class="bi bi-database-fill text-success" style="font-size:3rem;"></i>
                     <h5 class="card-title mt-3">Repositórios Monitorados</h5>
                     <p class="card-text text-muted">Visualize os repositórios integrados e suas estatísticas de atualização.</p>
-                    <a href="<?= base_url('/repositorios') ?>" class="btn btn-outline-success">Acessar</a>
+                    <a href="<?= base_url('/repository') ?>" class="btn btn-outline-success">Acessar</a>
                 </div>
             </div>
         </div>
@@ -49,4 +38,4 @@
             </div>
         </div>
     </div>
-<?= $this->endSection() ?>
+</div>
