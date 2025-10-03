@@ -38,14 +38,14 @@
     .build01 {
         background-image: url("<?= base_url('/assets/background/build-01.png'); ?>");
         height: 75px;
-        animation: moveBuild01 60s linear infinite;
+        animation: moveBuild01 180s linear infinite;
         z-index: 1;
     }
 
     .build02 {
         background-image: url("<?= base_url('/assets/background/build-02.png'); ?>");
         height: 65px;
-        animation: moveBuild02 190s linear infinite;
+        animation: moveBuild02 60s linear infinite;
         z-index: 2;
     }
 

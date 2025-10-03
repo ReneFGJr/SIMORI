@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container container_simori mt-5 p-4">
     <h2>Novo Repositório</h2>
     <form action="<?= base_url('/repository/store') ?>" method="post">
         <div class="mb-3">

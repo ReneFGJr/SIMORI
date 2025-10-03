@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container container_simori mt-5 p-4">
     <h2>Detalhes do Repositório</h2>
     <ul class="list-group">
         <li class="list-group-item"><b>ID:</b> <?= $repo['id_rp'] ?></li>
@@ -10,4 +10,12 @@
     </ul>
     <br>
     <a href="<?= base_url('/repository') ?>" class="btn btn-secondary">Voltar</a>
+
+    <?php
+    if ($repo['rp_status'] == 0) {
+        echo '<a href="'.base_url('/repository/analyse/'.$repo['id_rp']).'" class="btn btn-outline-primary">Analisar</a>';
+    } else {
+        echo '<a href="' . base_url('/repository/analyse/' . $repo['id_rp']) . '" class="btn btn-outline-primary">Analisar</a>';
+    }
+    ?>
 </div>

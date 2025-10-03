@@ -20,6 +20,7 @@ $routes->get('/repository/edit/(:num)', 'Repository::edit/$1');
 $routes->post('/repository/update/(:num)', 'Repository::update/$1');
 $routes->get('/repository/delete/(:num)', 'Repository::delete/$1');
 $routes->get('/repository/show/(:num)', 'Repository::show/$1');
+$routes->get('/repository/analyse/(:num)', 'Repository::analyse/$1');
 
 
 $routes->get('/', 'Home::index');

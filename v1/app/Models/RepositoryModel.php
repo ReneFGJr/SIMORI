@@ -17,6 +17,9 @@ class RepositoryModel extends Model
         'rp_name',
         'rp_url',
         'rp_status',
+        'rp_instituicao',
+        'rp_plataforma',
+        'rp_versao',
         'rp_update',
         'created_at'
     ];
@@ -47,4 +50,11 @@ class RepositoryModel extends Model
     ];
 
     protected $skipValidation = false;
+
+    function updateStatus($id, $status)
+    {
+        $data = [];
+        $data['rp_status'] = $status;
+        return $this->set($data)->where('id_rp', $id)->update();
+    }
 }
