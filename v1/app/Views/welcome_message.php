@@ -1,6 +1,5 @@
 <?= $this->extend('layout/main') ?>
-<?= $this->section('content') ?>
-
+<?= $this->section('welcome') ?>
 <div class="container mt-5">
     <!-- Título -->
     <div class="text-center mb-5">
@@ -50,12 +49,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Rodapé -->
-    <footer class="mt-5 text-center text-muted">
-        <hr>
-        <small>© <?= date('Y') ?> - SiMoRI | Desenvolvido com CodeIgniter 4 e Bootstrap 5</small>
-    </footer>
-</div>
-
 <?= $this->endSection() ?>

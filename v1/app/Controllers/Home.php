@@ -6,6 +6,11 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('welcome_message');
+
+        $RSP = view('layout/main');
+        $RSP .= view('layout/navbar');
+        $RSP .= view('welcome_paralax');
+        //$RSP .= view('welcome_message');
+        return $RSP;
     }
 }
