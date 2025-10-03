@@ -149,12 +149,12 @@ class Repository extends BaseController
                     break;
                 case 'OAI':
                     // Simular verificação OAI-PMH
-                    sleep(2); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de verificação OAI-PMH
                     break;
                 case 'METADATA':
                     // Simular extração de metadados
-                    sleep(3); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de extração de metadados
                     break;
                 case 'CHECK':
@@ -164,17 +164,16 @@ class Repository extends BaseController
                     break;
                 case 'FINAL':
                     // Simular finalização
-                    sleep(1); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de finalização
                     break;
                 case 'DONE':
                     // Análise concluída
-                    sleep(1); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real após conclusão
                     break;
             }
-            sleep(2); // tempo para simular execução
-
+            sleep(0.2); // tempo para simular execução
         }
 
         echo '<a href="' . base_url('/repository/show/' . $id) . '" class="btn btn-primary mt-2 mb-3">Ver detalhes do repositório</a>';
