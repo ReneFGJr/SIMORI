@@ -31,12 +31,7 @@ class RepositoryModel extends Model
     protected $deletedField  = '';
 
     // Validações opcionais
-    protected $validationRules = [
-        'rp_name'   => 'required|min_length[3]|max_length[200]',
-        'rp_url'    => 'required|valid_url|max_length[100]',
-        'rp_status' => 'integer',
-        'rp_update' => 'valid_date'
-    ];
+    protected $validationRules = [ ];
 
     protected $validationMessages = [
         'rp_name' => [

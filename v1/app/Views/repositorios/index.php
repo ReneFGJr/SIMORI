@@ -1,17 +1,7 @@
-<?= $this->extend('layout/main') ?>
-<?= $this->section('content') ?>
-
-<div class="container mt-4">
+<div class="container container_simori mt-5 p-4">
     <h2 class="mb-4 text-primary">
         <i class="bi bi-database-fill"></i> Repositórios Cadastrados
     </h2>
-
-    <!-- Botão Novo -->
-    <div class="mb-3">
-        <a href="<?= base_url('/repositorios/create') ?>" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Novo Repositório
-        </a>
-    </div>
 
     <!-- Lista de repositórios -->
     <div class="row g-4">
@@ -66,5 +56,3 @@
         <?php endif; ?>
     </div>
 </div>
-
-<?= $this->endSection() ?>
