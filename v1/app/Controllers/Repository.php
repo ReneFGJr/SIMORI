@@ -6,20 +6,16 @@ use App\Models\RepositoryModel;
 use CodeIgniter\Controller;
 
 helper('urls');
+helper('sisdoc');
 
 class Repository extends BaseController
 {
-    protected $repoModel;
-
-    public function __construct()
-    {
-        $this->repoModel = new RepositoryModel();
-    }
 
     // 📍 Listar
     public function index()
     {
-        $data['repos'] = $this->repoModel->findAll();
+        $Repo = new \App\Models\RepositoryModel();
+        $data['repos'] = $Repo->findAll();
 
         $RSP = view('layout/header');
         $RSP .= view('layout/navbar');
@@ -28,9 +24,70 @@ class Repository extends BaseController
         return $RSP;
     }
 
+    public function harvesting($id)
+    {
+        $Repo = new \App\Models\RepositoryModel();
+        $Data = $Repo->find($id);
+        if (!$Data) {
+            return redirect()->to('/repository')->with('error', 'Repositório não encontrado.');
+        }
+
+        $url = $Data['rp_url'];
+        $type = $Data['rp_plataforma'];
+
+        switch($type) {
+            case 'DSpace':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
+                break;
+            case 'DSpace-CRIS':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
+                break;
+            case 'DSpace-XMLUI':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
+                break;
+            case 'EPrints':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'cgi/oai2';
+                break;
+            case 'Dataverse':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
+                break;
+            case 'Omeka-S':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
+                break;
+            case 'Fedora':
+                // Exemplo: https://example.com/fedora/oai?verb=Identify
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'fedora/oai';
+                break;
+            case 'Outros':
+                // Manter a URL como está
+                break;
+            default:
+                return redirect()->to('/repository')->with('error', 'Plataforma desconhecida.');
+        }
+
+        if (url_exists($url) === false) {
+            echo "ERRO ".$GLOBALS['url_exists_error'];
+            exit;
+        }
+
+        $Repositorio = new \App\Models\RepositorioModel();
+        $data = $Repositorio->where('base_url', $url)->first();
+
+        if ($data == []) {
+            $dt = [];
+            $dt['base_url'] = $url;
+            $idR = $Repositorio->insert($dt);
+            return redirect()->to('/oai/identify/'.$idR)->with('error', 'Plataforma desconhecida.');
+        } else {
+            $idR = $data['id'];
+            return redirect()->to('/oai/identify/' . $idR)->with('error', 'Plataforma desconhecida.');
+        }
+    }
+
     public function analyse($id)
     {
-        $Repository = $this->repoModel->find($id);
+        $Repo = new \App\Models\RepositoryModel();
+        $Repository = $Repo->find($id);
         if (!$Repository) {
             return redirect()->to('/repository')->with('error', 'Repositório não encontrado.');
         }
@@ -92,12 +149,12 @@ class Repository extends BaseController
                     break;
                 case 'OAI':
                     // Simular verificação OAI-PMH
-                    sleep(2); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de verificação OAI-PMH
                     break;
                 case 'METADATA':
                     // Simular extração de metadados
-                    sleep(3); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de extração de metadados
                     break;
                 case 'CHECK':
@@ -107,18 +164,19 @@ class Repository extends BaseController
                     break;
                 case 'FINAL':
                     // Simular finalização
-                    sleep(1); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de finalização
                     break;
                 case 'DONE':
                     // Análise concluída
-                    sleep(1); // tempo para simular execução
+                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real após conclusão
                     break;
             }
-            sleep(2); // tempo para simular execução
-
+            sleep(0.2); // tempo para simular execução
         }
+
+        echo '<a href="' . base_url('/repository/show/' . $id) . '" class="btn btn-primary mt-2 mb-3">Ver detalhes do repositório</a>';
 
         echo "</div></div>";
         echo view('layout/footer');
@@ -142,7 +200,9 @@ class Repository extends BaseController
     // 📍 Salvar novo
     public function store()
     {
-        $this->repoModel->save([
+        $Repo = new \App\Models\RepositoryModel();
+
+        $Repo->save([
             'rp_name'   => $this->request->getPost('rp_name'),
             'rp_url'    => $this->request->getPost('rp_url'),
             'rp_status' => $this->request->getPost('rp_status'),
@@ -157,8 +217,8 @@ class Repository extends BaseController
     // 📍 Editar form
     public function edit($id)
     {
-
-        $data['repo'] = $this->repoModel->find($id);
+        $Repo = new \App\Models\RepositoryModel();
+        $data['repo'] = $Repo->find($id);
         $RSP = view('layout/header');
         $RSP .= view('layout/navbar');
         $RSP .= view('repository/edit', $data);
@@ -170,6 +230,7 @@ class Repository extends BaseController
     // 📍 Atualizar
     public function update($id)
     {
+        $Repo = new \App\Models\RepositoryModel();
         $dt = [
             'rp_name'   => $this->request->getPost('rp_name'),
             'rp_url'    => $this->request->getPost('rp_url'),
@@ -178,22 +239,23 @@ class Repository extends BaseController
             'rp_instituicao' => $this->request->getPost('rp_instituicao'),
             'rp_plataforma' => $this->request->getPost('rp_plataforma')
         ];
-        $this->repoModel->set($dt)->where('id_rp', $id)->update();
-
-        return redirect()->to('/repository')->with('success', 'Repositório atualizado!');
+        $Repo->set($dt)->where('id_rp', $id)->update();
+        return redirect()->to('/repository/show/' . $id)->with('success', 'Repositório atualizado!');
     }
 
     // 📍 Excluir
     public function delete($id)
     {
-        $this->repoModel->delete($id);
+        $Repo = new \App\Models\RepositoryModel();
+        $Repo->delete($id);
         return redirect()->to('/repository')->with('success', 'Repositório excluído!');
     }
 
     // 📍 Visualizar
     public function show($id)
     {
-        $data['repo'] = $this->repoModel->find($id);
+        $Repo = new \App\Models\RepositoryModel();
+        $data['repo'] = $Repo->find($id);
         $RSP = view('layout/header');
         $RSP .= view('layout/navbar');
         $RSP .= view('repository/show', $data);

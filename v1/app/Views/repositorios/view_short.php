@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container container_simori mt-5 p-4">
     <!-- Lista de repositórios -->
     <div class="row g-4">
         <?php if (!empty($r)): ?>
@@ -46,6 +46,15 @@
 
                     <!-- Rodapé -->
                     <div class="card-footer bg-light d-flex justify-content-end gap-2">
+
+                        <a href="<?= base_url('/oai/register/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> Coletar Register
+                        </a>
+
+                        <a href="<?= base_url('/oai/sets/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> Coletar Sets
+                        </a>
+
                         <a href="<?= base_url('/repositorios/view/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye"></i> Acessar
                         </a>

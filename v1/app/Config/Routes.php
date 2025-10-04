@@ -21,6 +21,12 @@ $routes->post('/repository/update/(:num)', 'Repository::update/$1');
 $routes->get('/repository/delete/(:num)', 'Repository::delete/$1');
 $routes->get('/repository/show/(:num)', 'Repository::show/$1');
 $routes->get('/repository/analyse/(:num)', 'Repository::analyse/$1');
+$routes->get('/repository/harvesting/(:num)', 'Repository::harvesting/$1');
+$routes->get('/oai/identify/(:num)', 'Repositorios::harvesting/$1');
+$routes->get('/oai/sets/(:num)', 'Repositorios::harvesting_sets/$1');
+$routes->get('/oai/register/(:num)', 'Repositorios::harvesting_register/$1');
+
+
 
 
 $routes->get('/', 'Home::index');

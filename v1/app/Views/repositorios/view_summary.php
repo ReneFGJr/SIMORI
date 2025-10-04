@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container container_simori mt-5 p-4">
     <!-- Título -->
     <div class="mb-4">
         <h2 class="text-primary">
@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <i class="bi bi-diagram-3-fill text-primary" style="font-size:2rem;"></i>
                     <h6 class="mt-2 text-muted">Total de Sets</h6>
-                    <h3 class="fw-bold"><?= esc($stats['total_sets'] ?? 0) ?></h3>
+                    <h3 class="fw-bold"><?= esc(number_format($stats['total_sets'] ?? 0, 0, ',', '.')) ?></h3>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <i class="bi bi-collection-fill text-success" style="font-size:2rem;"></i>
                     <h6 class="mt-2 text-muted">Total de Registros</h6>
-                    <h3 class="fw-bold"><?= esc($stats['total_registros'] ?? 0) ?></h3>
+                    <h3 class="fw-bold"><?= esc(number_format($stats['total_records'] ?? 0, 0, ',', '.')) ?></h3>
                 </div>
             </div>
         </div>
