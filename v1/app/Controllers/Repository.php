@@ -35,7 +35,7 @@ class Repository extends BaseController
         $url = $Data['rp_url'];
         $type = $Data['rp_plataforma'];
 
-        switch($type) {
+        switch ($type) {
             case 'DSpace':
                 $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
                 break;
@@ -69,7 +69,7 @@ class Repository extends BaseController
         }
 
         if (url_exists($url) === false) {
-            echo "ERRO ".$GLOBALS['url_exists_error'];
+            echo "ERRO " . $GLOBALS['url_exists_error'];
             exit;
         }
 
@@ -80,7 +80,7 @@ class Repository extends BaseController
             $dt = [];
             $dt['base_url'] = $url;
             $idR = $Repositorio->insert($dt);
-            return redirect()->to('/oai/identify/'.$idR)->with('error', 'Plataforma desconhecida.');
+            return redirect()->to('/oai/identify/' . $idR)->with('error', 'Plataforma desconhecida.');
         } else {
             $idR = $data['id'];
             return redirect()->to('/oai/identify/' . $idR)->with('error', 'Plataforma desconhecida.');
@@ -116,6 +116,7 @@ class Repository extends BaseController
         // simulação de passos
         $steps = [
             ["action" => "CONNECTION", "message" => "🔎 Verificando conexão..."],
+            ["action" => "TYPE",       "message" => "🔧 Detectando tipo de repositório..."],
             ["action" => "OAI",        "message" => "🌐 Conexão OK!"],
             ["action" => "METADATA",   "message" => "⚙️ Extraindo metadados..."],
             ["action" => "CHECK",      "message" => "🔍 Checando integridade..."],
@@ -129,20 +130,20 @@ class Repository extends BaseController
             echo "<p>{$s['message']}</p>";
             echo $s['action'];
             flush();
-            switch($s['action']) {
+            switch ($s['action']) {
                 case 'CONNECTION':
                     echo " - Iniciando conexão...";
                     $connection = url_exists($Repository['rp_url']);
                     echo $connection
                         ? '<span class="badge bg-success">✅ Conexão bem-sucedida!</span>'
-                        : '<span class="badge bg-danger">❌ Falha na conexão '. $Repository['rp_url'].'.</span>';
+                        : '<span class="badge bg-danger">❌ Falha na conexão ' . $Repository['rp_url'] . '.</span>';
                     flush();
 
                     if (!$connection) {
                         $dd = [];
                         $Rpos->updateStatus($id, 404);
                         echo "<p>🔴 Não foi possível conectar ao repositório. Verifique a URL e tente novamente.</p>";
-                        echo '<p>'.$GLOBALS['url_exists_error'].'</p>';
+                        echo '<p>' . $GLOBALS['url_exists_error'] . '</p>';
                         echo "</div></div>";
                         flush();
                         exit;
@@ -150,9 +151,32 @@ class Repository extends BaseController
                         $Rpos->updateStatus($id, 1);
                     }
                     break;
+                case 'TYPE':
+                    if (isset($Repository['rp_url'])) {
+                        $url = $Repository['rp_url'];
+                        $type = '';
+                        if (strpos($url, 'jspui') !== false) {
+                            $url = substr($url, 0, strpos($url, '/jspui'));
+                            $type = 'DSpace';
+                        } elseif (strpos($url, 'xmlui') !== false) {
+                            $url = substr($url, 0, strpos($url, '/xmlui'));
+                            $type = 'DSpace';
+                        } elseif (strpos($url, 'xmlui') !== false) {
+                            $type = 'DSpace';
+                        } elseif (strpos($url, 'xmlui') !== false) {
+                            $type = 'DSpace';
+                        } else {
+                            $type = 'Outros';
+                        }
+                    }
+
+                    if ($type != '') {
+                        $Repository['rp_plataforma'] = $type;
+                        $Repository['rp_url'] = $url;
+                        $Rpos->set($Repository)->where('id_rp', $id)->update();
+                        echo ' Tipo: <span class="badge bg-success">✅ '.$type.'!</span>';
+                    }
                 case 'OAI':
-                    // Simular verificação OAI-PMH
-                    sleep(0.2); // tempo para simular execução
                     // Aqui você pode adicionar a lógica real de verificação OAI-PMH
                     break;
                 case 'METADATA':
@@ -176,10 +200,9 @@ class Repository extends BaseController
                     // Aqui você pode adicionar a lógica real após conclusão
                     break;
             }
-            sleep(0.2); // tempo para simular execução
 
         }
-
+        echo '<br><br>';
         echo '<a href="' . base_url('/repository/show/' . $id) . '" class="btn btn-primary mt-2 mb-3">Ver detalhes do repositório</a>';
 
         echo "</div></div>";
