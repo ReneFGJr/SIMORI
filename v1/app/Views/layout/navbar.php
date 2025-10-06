@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="<?= base_url('/') ?>">Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?= base_url('/repositorios') ?>">Repositórios</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('/repository') ?>">Repositórios</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= base_url('/indicadores') ?>">Indicadores</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= base_url('/sobre') ?>">Sobre</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= base_url('/admin') ?>">Administração</a></li>
