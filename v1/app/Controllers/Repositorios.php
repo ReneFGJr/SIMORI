@@ -8,6 +8,9 @@ use App\Models\OaiRepositoryModel;
 helper('urls');
 helper('sisdoc');
 
+ini_set('memory_limit', '512M'); // ou até '1G' se necessário
+set_time_limit(0);
+
 class Repositorios extends BaseController
 {
     public function index()
@@ -33,6 +36,9 @@ class Repositorios extends BaseController
 
 
         if (isset($identify['base_url'])) {
+            if (!isset($identify['repositoryName'])) {
+                $identify['repositoryName'] = $identify['base_url'];
+            }
             $model->set($identify)->where('id', $id)->update();
             return redirect()->to('/repositorios/view/' . $id);
         } else {
@@ -78,7 +84,7 @@ class Repositorios extends BaseController
         $OaiIdentify = new \App\Libraries\OaiService();
         $sets = $OaiIdentify->listIdentifiers($data['base_url'], $id, '');
         $token = 'inicio';
-        echo '<div id="log">X</div>';
+        echo '<div id="log">Iniciando processo de coleta</div>';
         echo '<script>let logDiv = document.getElementById("log");</script>' . chr(13);
         while ($token != '')
             {
@@ -90,10 +96,19 @@ class Repositorios extends BaseController
 
                 flush();
                 $sets = $OaiIdentify->listIdentifiers($data['base_url'], $id, $token);
-
-                echo '<script>';
-                echo 'logDiv.innerHTML = "Coletados ' . count($sets[0]) . ' registros...(' . $token . ')";  ';
-                echo '</script>';
+                if (isset($sets[0]))
+                    {
+                        $OaiRecordModel->registers($sets[0]);
+                        echo '<script>';
+                        echo 'logDiv.innerHTML = "Coletados ' . count($sets[0]) . ' registros...(' . $token . ')";  ';
+                        echo '</script>';
+                    } else {
+                        echo '<script>';
+                        echo 'logDiv.innerHTML = "Sem registros";  ';
+                        echo '</script>';
+                        $token = '';
+                    }
+                flush();
             }
         echo '<br><br><br>';
         echo '<br><br><br>';
@@ -103,10 +118,10 @@ class Repositorios extends BaseController
         echo 'logDiv.innerHTML = "Atualizando estatística";  ';
         echo '</script>';
         flush();
-        $tot = $OaiRecordModel->where('repository', $id)->countAllResults();
+        $tot = $OaiRecordModel->select("count(*) as total")->where('repository', $id)->first();
 
         $SummaeryModel = new \App\Models\SummaryModel();
-        $SummaeryModel->register('records_' . $id, $tot);
+        $SummaeryModel->register('records_' . $id, $tot['total'] ?? 0);
 
         echo '<script>';
         echo 'logDiv.innerHTML = "Fim da Coleta";  ';
@@ -138,13 +153,13 @@ class Repositorios extends BaseController
                     $SetModel->insert($s);
                 }
             }
-
-            /*********************** Update */
-            $SummaeryModel = new \App\Models\SummaryModel();
-            $SetModel->select('COUNT(*) AS total_sets')->where('identify_id', $id)->first();
-            $SummaeryModel->register('sets_' . $id, $SetModel->countAllResults());
-            return redirect()->to('/repositorios/view/' . $id);
         }
+
+        /*********************** Update */
+        $SummaeryModel = new \App\Models\SummaryModel();
+        $dt = $SetModel->select('COUNT(*) AS totals')->where('identify_id', $id)->first();
+        $SummaeryModel->register('sets_' . $id, $dt['totals'] ?? 0);
+        return redirect()->to('/repositorios/view/' . $id);
     }
 
     public function create()

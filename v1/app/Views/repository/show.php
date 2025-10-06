@@ -14,6 +14,7 @@
     <?php
     if ($repo['rp_status'] == 0) {
         echo '<a href="'.base_url('/repository/analyse/'.$repo['id_rp']).'" class="btn btn-outline-primary">Analisar</a>';
+        echo '<a href="' . base_url('/repository/edit/' . $repo['id_rp']) . '" class="ms-2 btn btn-outline-warning">Editar</a>';
     } else {
         echo '<a href="' . base_url('/repository/harvesting/' . $repo['id_rp']) . '" class="btn btn-outline-primary">Coletar</a>';
         echo '<a href="' . base_url('/repository/edit/' . $repo['id_rp']) . '" class="ms-2 btn btn-outline-warning">Editar</a>';

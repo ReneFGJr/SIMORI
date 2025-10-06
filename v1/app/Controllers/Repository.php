@@ -39,6 +39,9 @@ class Repository extends BaseController
             case 'DSpace':
                 $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
                 break;
+            case 'DSpace7+':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'server/oai/request';
+                break;
             case 'DSpace-CRIS':
                 $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
                 break;
@@ -174,6 +177,7 @@ class Repository extends BaseController
                     break;
             }
             sleep(0.2); // tempo para simular execução
+
         }
 
         echo '<a href="' . base_url('/repository/show/' . $id) . '" class="btn btn-primary mt-2 mb-3">Ver detalhes do repositório</a>';

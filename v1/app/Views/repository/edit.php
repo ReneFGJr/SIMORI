@@ -21,6 +21,7 @@
             <select name="rp_plataforma" class="form-control">
                 <option value="">Selecione</option>
                 <option value="DSpace" <?= $repo['rp_plataforma'] == 'DSpace' ? 'selected' : '' ?>>DSpace</option>
+                <option value="DSpace7+" <?= $repo['rp_plataforma'] == 'DSpace 7+' ? 'selected' : '' ?>>DSpace7+</option>
                 <option value="Dataverse" <?= $repo['rp_plataforma'] == 'Dataverse' ? 'selected' : '' ?>>Dataverse</option>
                 <option value="EPrints" <?= $repo['rp_plataforma'] == 'EPrints' ? 'selected' : '' ?>>EPrints</option>
                 <option value="Omeka" <?= $repo['rp_plataforma'] == 'Omeka' ? 'selected' : '' ?>>Omeka</option>

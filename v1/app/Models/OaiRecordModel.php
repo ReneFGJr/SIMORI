@@ -25,21 +25,18 @@ class OaiRecordModel extends Model
     protected $returnType = 'array';
 
     // Regras de validação (opcional)
-    protected $validationRules = [
-        'repository'     => 'required|integer',
-        'oai_identifier' => 'permit_empty|string|max_length[255]',
-        'datestamp'      => 'permit_empty|string|max_length[50]',
-        'setSpec'        => 'permit_empty|string|max_length[255]',
-        'deleted'        => 'permit_empty|in_list[0,1]',
-        'harvesting'     => 'required|integer'
-    ];
+    protected $validationRules = [ ];
 
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
     function register($s)
     {
-        $exists = $this->where('oai_identifier', $s['identifier'])
+        if (!isset($s['repository_id']) || !isset($s['identifier'])) {
+            return 0; // dados insuficientes
+        }
+        $exists = $this
+            ->where('oai_identifier', $s['identifier'])
             ->where('repository', $s['repository_id'])
             ->first();
         if (!$exists) {
