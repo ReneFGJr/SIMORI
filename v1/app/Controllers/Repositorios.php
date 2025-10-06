@@ -121,7 +121,7 @@ class Repositorios extends BaseController
         $tot = $OaiRecordModel->select("count(*) as total")->where('repository', $id)->first();
 
         $SummaeryModel = new \App\Models\SummaryModel();
-        $SummaeryModel->register('records_' . $id, $tot['total'] ?? 0);
+        $SummaeryModel->register('records', $tot['total'] ?? 0, $id);
 
         echo '<script>';
         echo 'logDiv.innerHTML = "Fim da Coleta";  ';
@@ -158,7 +158,7 @@ class Repositorios extends BaseController
         /*********************** Update */
         $SummaeryModel = new \App\Models\SummaryModel();
         $dt = $SetModel->select('COUNT(*) AS totals')->where('identify_id', $id)->first();
-        $SummaeryModel->register('sets_' . $id, $dt['totals'] ?? 0);
+        $SummaeryModel->register('sets', $dt['totals'] ?? 0,$id);
         return redirect()->to('/repositorios/view/' . $id);
     }
 
@@ -201,21 +201,21 @@ class Repositorios extends BaseController
         $repositorioModel = new \App\Models\RepositorioModel();
         $data['r'] = $repositorioModel->find($id);
 
-        $ind = ['sets_' . $id, 'records_' . $id];
+        $ind = ['sets', 'records'];
 
         foreach ($ind as $i) {
-            $dt = $SummaeryModel->getIndicator($i);
+            $dt = $SummaeryModel->getIndicator($i,$id);
             if (!$dt) {
                 // se não existir, cria com valor zero
-                $SummaeryModel->register($i, 0);
-                $dt = $SummaeryModel->getIndicator($i);
+                $SummaeryModel->register($i, 0, $id);
+                $dt = $SummaeryModel->getIndicator($i,$id);
             }
             $data['stats'][$i] = $dt['d_valor'] ?? 0;
         }
 
-        $total = $SummaeryModel->getIndicator($ind[0]);
+        $total = $SummaeryModel->getIndicator($ind[0],$id);
         $data['stats']['total_sets'] = $total['d_valor'] ?? 0;
-        $total = $SummaeryModel->getIndicator($ind[1]);
+        $total = $SummaeryModel->getIndicator($ind[1],$id);
         $data['stats']['total_records'] = $total['d_valor'] ?? 0;
         //$data['stats']['ultima_coleta'] = max(array_column($data['sets'], 'last_collected'));
         //$data['stats']['total_autores'] = count(array_unique(array_column($data['sets'], 'author')));

@@ -16,7 +16,9 @@ class SummaryModel extends Model
     protected $allowedFields    = [
         'd_created',
         'd_indicator',
-        'd_valor'
+        'd_valor',
+        'd_repository',
+        'd_created'
     ];
 
     // timestamps automáticos do CI4
@@ -40,16 +42,21 @@ class SummaryModel extends Model
         ]
     ];
 
-    function getIndicator(string $indicator): ?array
+    function getIndicator(string $indicator, int $repository): ?array
     {
-        return $this->where('d_indicator', $indicator)->first();
+        return $this
+            ->where('d_indicator', $indicator)
+            ->where('d_repository', $repository)
+        ->first();
     }
 
-    function register(string $indicator, int $value): bool
+    function register(string $indicator, int $value, int $repository): bool
     {
         $data = [
             'd_indicator' => $indicator,
-            'd_valor'     => $value
+            'd_valor'     => $value,
+            'd_repository'=> $repository,
+            'd_created'   => date('Y-m-d H:i:s')
         ];
 
         $dt = $this->where('d_indicator', $indicator)->first();

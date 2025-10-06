@@ -87,6 +87,13 @@ class Repository extends BaseController
         }
     }
 
+    public function url_check()
+    {
+        $Repo = new \App\Models\RepositoryModel();
+        $Repo->check_url();
+    }
+        // simulação de passos}
+
     public function analyse($id)
     {
         $Repo = new \App\Models\RepositoryModel();
@@ -155,6 +162,7 @@ class Repository extends BaseController
                     if (isset($Repository['rp_url'])) {
                         $url = $Repository['rp_url'];
                         $type = '';
+                        echo $url;
                         if (strpos($url, 'jspui') !== false) {
                             $url = substr($url, 0, strpos($url, '/jspui'));
                             $type = 'DSpace';
@@ -166,8 +174,13 @@ class Repository extends BaseController
                         } elseif (strpos($url, 'xmlui') !== false) {
                             $type = 'DSpace';
                         } else {
-                            $type = 'Outros';
+                            $type = '';
                         }
+                    }
+
+                    if ($type == '') {
+
+
                     }
 
                     if ($type != '') {
@@ -175,6 +188,7 @@ class Repository extends BaseController
                         $Repository['rp_url'] = $url;
                         $Rpos->set($Repository)->where('id_rp', $id)->update();
                         echo ' Tipo: <span class="badge bg-success">✅ '.$type.'!</span>';
+                        flush();
                     }
                 case 'OAI':
                     // Aqui você pode adicionar a lógica real de verificação OAI-PMH

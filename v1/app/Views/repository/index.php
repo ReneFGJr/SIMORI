@@ -4,6 +4,10 @@
         <i class="bi bi-plus-circle"></i> Novo Repositório
     </a>
 
+    <a href="<?= base_url('/repository/url_check') ?>" class="btn btn-success mb-3">
+        <i class="bi bi-check-circle"></i> Check URLs
+    </a>
+
     <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
