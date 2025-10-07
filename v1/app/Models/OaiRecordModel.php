@@ -30,6 +30,19 @@ class OaiRecordModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
+    function make_stats($id)
+        {
+            $SummaryModel = new \App\Models\SummaryModel();
+            $OAIset = new \App\Models\OaiSetModel();
+            $sets = $OAIset->select('count(*) as total')->where('identify_id', $id)->first();
+
+            $SummaryModel->register('sets',$sets['total'], $id);
+
+
+            $OAIrecord = new \App\Models\OaiRecordModel();
+            $sets = $OAIrecord->select('count(*) as total')->where('repository', $id)->first();
+            $SummaryModel->register('records', $sets['total'], $id);
+        }
     function register($s)
     {
         if (!isset($s['repository_id']) || !isset($s['identifier'])) {

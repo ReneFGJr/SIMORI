@@ -50,22 +50,32 @@ class SummaryModel extends Model
         ->first();
     }
 
-    function register(string $indicator, int $value, int $repository): bool
+    public function register(string $indicator, int $value, int $repository): bool
     {
         $data = [
-            'd_indicator' => $indicator,
-            'd_valor'     => $value,
-            'd_repository'=> $repository,
-            'd_created'   => date('Y-m-d H:i:s')
+            'd_indicator'  => $indicator,
+            'd_valor'      => $value,
+            'd_repository' => $repository,
+            'd_created'    => date('Y-m-d H:i:s')
         ];
 
-        $dt = $this->where('d_indicator', $indicator)->first();
+        // Verifica se já existe o indicador para este repositório
+        $dt = $this->where('d_indicator', $indicator)
+            ->where('d_repository', $repository)
+            ->first();
+
         if ($dt) {
-            $data['d_created'] = $dt['d_created']; // mantém a data original
-            $this->where('d_indicator', $indicator);
-            return $this->set($data)->update();
+            // Mantém a data original
+            $data['d_created'] = $dt['d_created'];
+
+            // Atualiza o valor existente
+            return (bool) $this->where('d_indicator', $indicator)
+                ->where('d_repository', $repository)
+                ->set($data)
+                ->update();
         } else {
-            return $this->insert($data);
+            // Insere novo registro
+            return (bool) $this->insert($data);
         }
     }
 }

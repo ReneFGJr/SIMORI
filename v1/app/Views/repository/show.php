@@ -74,6 +74,9 @@
                             <a href="<?= base_url('/repository/harvesting/' . $repo['id_rp']) ?>" class="btn btn-outline-success">
                                 <i class="bi bi-arrow-repeat"></i> Coletar OAI
                             </a>
+                            <a href="<?= base_url('/repository/stat_make/' . $repo['id_rp']) ?>" class="btn btn-outline-success">
+                                <i class="bi bi-bar-chart"></i> Gerar Estatísticas
+                            </a>
                             <a href="<?= base_url('/repository/edit/' . $repo['id_rp']) ?>" class="btn btn-outline-warning">
                                 <i class="bi bi-pencil-square"></i> Editar
                             </a>

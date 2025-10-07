@@ -276,6 +276,13 @@ class Repository extends BaseController
         return redirect()->to('/repository/view/' . $id);
     }
 
+    public function stat_make($id)
+    {
+        $OaiRecordModel = new \App\Models\OaiRecordModel();
+        $OaiRecordModel->make_stats($id);
+        return redirect()->to('/repository/view/' . $id)->with('success', 'Estatísticas atualizadas!');
+    }
+
     public function harvesting_register($id)
     {
         // No início da função ou do script
