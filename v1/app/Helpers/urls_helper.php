@@ -44,3 +44,49 @@ if (!function_exists('url_exists')) {
         return true;
     }
 }
+
+/**
+ * Faz uma requisição HTTP e retorna o conteúdo (HTML/XML) da URL.
+ * Retorna false em caso de erro e salva o erro em $GLOBALS['url_exists_error'].
+ */
+function get_url_content(string $url)
+{
+    $GLOBALS['url_exists_error'] = null;
+
+    if (empty($url)) {
+        $GLOBALS['url_exists_error'] = "URL vazia.";
+        return false;
+    }
+
+    $ch = curl_init($url);
+
+    // Configurações principais
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,      // Retorna o corpo da resposta
+        CURLOPT_FOLLOWLOCATION => true,      // Segue redirecionamentos
+        CURLOPT_SSL_VERIFYPEER => false,     // Ignora SSL inválido
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_TIMEOUT => 15,               // Tempo limite
+        CURLOPT_USERAGENT => 'SiMoRI/1.0 (+https://brapci.inf.br)', // Header útil
+        CURLOPT_HEADER => false,             // Ignora cabeçalhos
+    ]);
+
+    $exec = curl_exec($ch);
+
+    if ($exec === false) {
+        $GLOBALS['url_exists_error'] = curl_error($ch);
+        curl_close($ch);
+        return false;
+    }
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode < 200 || $httpCode >= 400) {
+        $GLOBALS['url_exists_error'] = "HTTP Code {$httpCode}";
+        return false;
+    }
+
+    // Retorna o HTML/XML da resposta
+    return $exec;
+}

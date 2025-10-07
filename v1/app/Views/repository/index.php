@@ -36,11 +36,13 @@
                     </td>
                     <td>
                         <?php if ($repo['rp_status'] == 1): ?>
-                            <span class="badge bg-success">Ativo</span>
+                            <span class="badge bg-success full">Ativo</span>
                         <?php elseif ($repo['rp_status'] == 0): ?>
-                            <span class="badge bg-secondary">Inativo</span>
+                            <span class="badge bg-secondary full">Inativo</span>
                         <?php elseif ($repo['rp_status'] == 404): ?>
-                            <span class="badge bg-danger">Erro 404</span>
+                            <span class="badge bg-danger full">Erro 404</span>
+                        <?php elseif ($repo['rp_status'] == 500): ?>
+                            <span class="badge bg-danger full">OAI Erro</span>
                         <?php else: ?>
                             <span class="badge bg-warning text-dark">Desconhecido</span>
                         <?php endif; ?>
@@ -49,7 +51,7 @@
                     <td><?= $repo['rp_update'] ?></td>
                     <td>
                         <nobr>
-                            <a href="<?= base_url('/repository/show/' . $repo['id_rp']) ?>" class="btn btn-info btn-sm">Ver</a>
+                            <a href="<?= base_url('/repository/show/' . $repo['id_rp']) ?>" target="_blank" class="btn btn-info btn-sm">Ver</a>
                             <a href="<?= base_url('/repository/edit/' . $repo['id_rp']) ?>" class="btn btn-warning btn-sm">Editar</a>
                             <!--
                         <a href="<?= base_url('/repository/delete/' . $repo['id_rp']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
