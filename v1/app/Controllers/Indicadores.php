@@ -36,7 +36,7 @@ class Indicadores extends BaseController
                     $label = 'Em teste';
                     break;
                 default:
-                    $label = 'Inativo';
+                    $label = 'Inativo '.$s['rp_status'];
             }
             $statusLabels[] = $label;
             $statusValues[] = (int)$s['total'];
