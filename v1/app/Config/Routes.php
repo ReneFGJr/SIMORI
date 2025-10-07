@@ -26,9 +26,7 @@ $routes->get('/repository/url_check', 'Repository::url_check');
 $routes->get('/oai/identify/(:num)', 'Repository::harvestingOAI/$1');
 $routes->get('/oai/sets/(:num)', 'Repository::harvesting_sets/$1');
 $routes->get('/oai/register/(:num)', 'Repository::harvesting_register/$1');
-
 $routes->get('/indicadores', 'Indicadores::index');
-
 
 
 
