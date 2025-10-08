@@ -32,6 +32,35 @@ class OaiRecordModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
+    public function getRegister($oaiUrl, $identifier, $r)
+    {
+        $Record = new \App\Models\OaiRecordModel();
+
+        $url = $oaiUrl . '?verb=GetRecord&metadataPrefix=oai_dc&identifier=' . urlencode($identifier);
+
+        $xml = $this->get_xml($url);
+
+
+        if (!$xml) {
+            echo "⚠️ Falha ao coletar $identifier<br>";
+            return '';
+        }
+
+        // Verifica se é XML válido e contém <GetRecord>
+        if (strpos($xml, '<GetRecord') === false) {
+            echo "⚠️ Resposta inválida para $identifier<br>";
+            return '';
+        }
+
+        // 🔹 Atualiza no banco
+        $dt = [
+            'xml' => $xml,
+            'status' => 1,
+            'harvesting' => 1
+        ];
+        $Record->set($dt)->where('id', $r['id'])->update();
+        return '';
+    }
     public function collect($repo_id)
     {
         $Repo = new RepositorioModel();
@@ -57,29 +86,11 @@ class OaiRecordModel extends Model
             $identifier = trim($r['oai_identifier']);
             if ($identifier == '') continue;
 
-            $url = $oaiUrl . '?verb=GetRecord&metadataPrefix=oai_dc&identifier=' . urlencode($identifier);
 
             echo "🔹 Coletando: <code>{$identifier}</code><br>";
             flush();
 
-            $xml = $this->get_xml($url);
-            if (!$xml) {
-                echo "⚠️ Falha ao coletar $identifier<br>";
-                continue;
-            }
-
-            // Verifica se é XML válido e contém <GetRecord>
-            if (strpos($xml, '<GetRecord') === false) {
-                echo "⚠️ Resposta inválida para $identifier<br>";
-                continue;
-            }
-
-            // 🔹 Atualiza no banco
-            $Record->update($r['id'], [
-                'xml' => $xml,
-                'status' => 1,
-                'harvesting' => 1]
-                );
+            $this->getRegister($oaiUrl, $identifier, $r);
 
             echo '<script>';
             echo 'logDiv.innerHTML = "✅ XML salvo para <b>'.$identifier.'</b><br><br>";  ';

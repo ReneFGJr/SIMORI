@@ -47,6 +47,11 @@ class RepositoryModel extends Model
 
     protected $skipValidation = false;
 
+    function check_url()
+        {
+            echo "Em implementação";
+        }
+
     function get_summary($id=0)
         {
             $RSP = 'Summary';

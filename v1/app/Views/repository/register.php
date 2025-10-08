@@ -19,27 +19,27 @@
                 </thead>
                 <tbody>
                     <?php foreach ($regs as $r) : ?>
-                        <tr>
+                        <tr class="<?php if ($r['deleted']) echo 'table-danger'; ?> <?php if (($r['status'] == 0) and($r['deleted'] == 0)) echo 'table-warning'; ?>">
                             <td><?= esc($r['id']) ?></td>
                             <td class="text-break"><code><?= esc($r['oai_identifier']) ?></code></td>
                             <td><?= esc($r['datestamp']) ?></td>
                             <td><?= esc($r['setSpec']) ?></td>
                             <td>
                                 <?php if ($r['status'] == 0) : ?>
-                                    <span class="badge bg-secondary">Pendente</span>
+                                    <span class="badge bg-secondary full">Pendente</span>
                                 <?php else : ?>
-                                    <span class="badge bg-success">Coletado</span>
+                                    <span class="badge bg-success full">Coletado</span>
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <?= $r['deleted'] ? '<span class="badge bg-danger">Sim</span>' : '<span class="badge bg-success">Não</span>' ?>
                             </td>
                             <td class="text-center">
-                                <?php if ($r['status'] == 0) : ?>
-                                    <a href="<?= base_url('repository/record_harvest/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
+                                <?php if (($r['status'] == 0) and($r['deleted'] == 0)) : ?>
+                                    <a href="<?= base_url('repository/record_harvest/' . $r['id']) ?>" target="_blank" class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-cloud-download"></i> Colher
                                     </a>
-                                <?php else : ?>
+                                <?php elseif ($r['deleted'] == 0) : ?>
                                     <a href="<?= base_url('repository/record_view/' . $r['id']) ?>" class="btn btn-sm btn-outline-success">
                                         <i class="bi bi-eye"></i> Ver
                                     </a>

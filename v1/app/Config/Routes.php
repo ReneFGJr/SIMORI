@@ -10,6 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/repository/view/(:num)', 'Repository::views/$1');
 $routes->get('/repositorios/sets/show/(:num)', 'Repository::sets_show/$1');
 $routes->get('/repository/record_view/(:num)', 'Repository::record_view/$1');
+$routes->get('/repository/record_harvest/(:num)', 'Repository::record_harvest/$1');
 //$routes->get('/repositorios/create', 'Repository::create');
 //$routes->get('/repositorios/edit/(:num)', 'Repository::edit/$1');
 //$routes->get('/repositorios/copy/(:num)', 'Repository::copy/$1');

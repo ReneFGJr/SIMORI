@@ -54,6 +54,22 @@ class Repository extends BaseController
         return $RSP;
     }
 
+    public function record_harvest($id)
+        {
+            $RecordModel = new \App\Models\OaiRecordModel();
+            $data['reg'] = $RecordModel->where('id',$id)->first();
+            $url_oai = (new \App\Models\RepositorioModel())->where('repository_id',$data['reg']['repository'])->first()['base_url'];
+
+            if (!$data['reg']) {
+                return redirect()->to('/repository')->with('error', 'Registro não encontrado.');
+            }
+
+            /* Coletar */
+            $RecordModel->getRegister($url_oai, $data['reg']['oai_identifier'], $data['reg']);
+
+            return redirect()->to('/repository/record_view/'.$id)->with('success', 'Iniciando coleta do registro...');
+        }
+
     public function record_view($id)
         {
             $RecordModel = new \App\Models\OaiRecordModel();
