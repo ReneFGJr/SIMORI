@@ -17,7 +17,7 @@
                         <div class="row">
                             <!-- Coluna 1 -->
                             <div class="col-md-6 col-lg-4 mb-3">
-                                <p class="mb-1"><strong>ID:</strong> <?= esc($r['id']) ?></p>
+                                <p class="mb-1"><strong>ID:</strong> <?= esc($r['repository_id']) ?></p>
                                 <p class="mb-1"><strong>Versão:</strong> <?= esc($r['protocol_version']) ?></p>
                             </div>
 
@@ -47,26 +47,30 @@
                     <!-- Rodapé -->
                     <div class="card-footer bg-light d-flex justify-content-end gap-2">
 
-                        <a href="<?= base_url('/oai/register/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-eye"></i> Coletar Register
+                        <a href="<?= base_url('/oai/records/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> Coletar Records
                         </a>
 
-                        <a href="<?= base_url('/oai/sets/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
+                        <a href="<?= base_url('/oai/register/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> Coletar Registers
+                        </a>
+
+                        <a href="<?= base_url('/oai/sets/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye"></i> Coletar Sets
                         </a>
 
-                        <a href="<?= base_url('/oai/identify/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
+                        <a href="<?= base_url('/oai/identify/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye"></i> Coletar Identify
                         </a>
 
-                        <a href="<?= base_url('/repositorios/view/' . $r['id']) ?>" class="btn btn-sm btn-outline-primary">
+                        <a href="<?= base_url('/repository/show/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-success">
                             <i class="bi bi-eye"></i> Acessar
                         </a>
                         <!--
-                        <a href="<?= base_url('/repositorios/copy/' . $r['id']) ?>" class="btn btn-sm btn-outline-info">
+                        <a href="<?= base_url('/repositorios/copy/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-files"></i> Copiar
                         </a>
-                        <a href="<?= base_url('/repositorios/delete/' . $r['id']) ?>"
+                        <a href="<?= base_url('/repositorios/delete/' . $r['repository_id']) ?>"
                            class="btn btn-sm btn-outline-danger"
                            onclick="return confirm('Tem certeza que deseja excluir este repositório?')">
                             <i class="bi bi-trash"></i> Excluir

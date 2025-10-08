@@ -24,9 +24,31 @@
         <div class="col-md-6 col-lg-4 col-xl-2">
             <div class="card shadow-sm h-100 border-0 text-center">
                 <div class="card-body">
-                    <i class="bi bi-collection-fill text-success" style="font-size:2rem;"></i>
+                    <i class="bi bi-collection-fill text-primary" style="font-size:2rem;"></i>
                     <h6 class="mt-2 text-muted">Total de Registros</h6>
                     <h3 class="fw-bold"><?= esc(number_format($stats['total_records'] ?? 0, 0, ',', '.')) ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Registros -->
+        <div class="col-md-6 col-lg-4 col-xl-2">
+            <div class="card shadow-sm h-100 border-0 text-center">
+                <div class="card-body">
+                    <i class="bi bi-collection-fill text-success" style="font-size:2rem;"></i>
+                    <h6 class="mt-2 text-muted">Registros Coletados</h6>
+                    <h3 class="fw-bold"><?= esc(number_format($stats['total_records_coletados'] ?? 0, 0, ',', '.')) ?></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Registros -->
+        <div class="col-md-6 col-lg-4 col-xl-2">
+            <div class="card shadow-sm h-100 border-0 text-center">
+                <div class="card-body">
+                    <i class="bi bi-collection-fill text-danger" style="font-size:2rem;"></i>
+                    <h6 class="mt-2 text-muted">Registros Excluídos</h6>
+                    <h3 class="fw-bold"><?= esc(number_format($stats['total_records_deleted'] ?? 0, 0, ',', '.')) ?></h3>
                 </div>
             </div>
         </div>

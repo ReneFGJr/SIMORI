@@ -24,6 +24,47 @@ class Repository extends BaseController
         return $RSP;
     }
 
+    public function sets_show($id) : string
+    {
+        $SetModel = new \App\Models\OaiSetModel();
+        $Repository = new \App\Models\RepositoryModel();
+        $RepositoryOAI = new \App\Models\RepositorioModel();
+
+        $sets = $SetModel->where('id', $id)->first();
+        $setSpec = $sets['set_spec'];
+        $Repo = $Repository->where('id_rp',$sets['identify_id'])->first();
+        $id_repo = $Repo['id_rp'];
+        $RepoOAI = $RepositoryOAI->where('repository_id',$id_repo)->first();
+
+        $Register = new \App\Models\OaiRecordModel();
+        $regs = $Register->where('setSpec', $setSpec)
+                         ->where('repository', $id_repo)
+                         ->findAll();
+        $data = [];
+        $data['identify_id'] = $id;
+        $data['r'] = $RepoOAI;
+        $data['regs'] = $regs;
+        //pre($RepoOAI);
+        //pre($data);
+        $RSP = view('layout/header');
+        $RSP .= view('layout/navbar');
+        $RSP .= view('repository/view_short', $data);
+        $RSP .= view('repository/register', $data);
+        $RSP .= view('layout/footer');
+        return $RSP;
+    }
+
+    public function record_view($id)
+        {
+            $RecordModel = new \App\Models\OaiRecordModel();
+            $data['reg'] = $RecordModel->where('id',$id)->first();
+            $RSP = view('layout/header');
+            $RSP .= view('layout/navbar');
+            $RSP .= view('repository/record_view', $data);
+            $RSP .= view('layout/footer');
+            return $RSP;
+        }
+
     public function harvesting($id)
     {
         $Repo = new \App\Models\RepositoryModel();
@@ -79,11 +120,12 @@ class Repository extends BaseController
         if ($data == []) {
             $dt = [];
             $dt['base_url'] = $url;
+            $dt['repository_id'] = $id;
             $idR = $Repositorio->insert($dt);
-            return redirect()->to('/oai/identify/' . $idR)->with('error', 'Plataforma desconhecida.');
+            return redirect()->to('/oai/identify/' . $id)->with('error', 'Plataforma desconhecida.');
         } else {
-            $idR = $data['id'];
-            return redirect()->to('/oai/identify/' . $idR)->with('error', 'Plataforma desconhecida.');
+            $idR = $data['repository_id'];
+            return redirect()->to('/oai/identify/' . $id)->with('error', 'Plataforma desconhecida.');
         }
     }
 
@@ -181,6 +223,87 @@ class Repository extends BaseController
         return $RSP;
     }
 
+    /*********** OAI */
+    /* Identify */
+
+    public function harvestingOAIrecords($id)
+    {
+        set_time_limit(0); //
+
+        $model = new \App\Models\RepositorioModel();
+        $data = $model->where('repository_id', $id)->first();
+
+        // Forçar saída imediata (desabilitar buffer do CI4)
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+        ob_implicit_flush(true);
+
+        header('Content-Type: text/html; charset=utf-8');
+        header('Cache-Control: no-cache');
+        header('X-Accel-Buffering: no'); // nginx não bufferizar
+
+        echo view('layout/header');
+        echo view('layout/navbar');
+        echo view('layout/footer');
+        echo '<div class="container container_simori mt-5 p-4">';
+        echo "<h3>Analisando repositório: " . esc($data['repository_name']) . "</h3>";
+        echo "<div id='log'>";
+        flush();
+
+        $OaiRecordModel = new \App\Models\OaiRecordModel();
+
+        $OaiIdentify = new \App\Libraries\OaiService();
+        $sets = $OaiIdentify->listIdentifiers($data['base_url'], $id, '');
+        $token = 'inicio';
+        echo '<div id="log">Iniciando processo de coleta de records</div>';
+        echo '<script>let logDiv = document.getElementById("log");</script>' . chr(13);
+        $OaiRecordModel = new \App\Models\OaiRecordModel();
+        $OaiRecordModel->collect($id);
+        exit;
+        while ($token != '') {
+            //echo "Coletados ".count($sets[0])." registros...(".$token.") ";
+            flush();
+            $token = $sets[1];
+            //echo "Novos: " . $OaiRecordModel->registers($sets[0]);
+            //echo '<br>';
+
+            flush();
+            $sets = $OaiIdentify->listIdentifiers($data['base_url'], $id, $token);
+            if (isset($sets[0])) {
+                $OaiRecordModel->registers($sets[0]);
+                echo '<script>';
+                echo 'logDiv.innerHTML = "Coletados ' . count($sets[0]) . ' registros...(' . $token . ')";  ';
+                echo '</script>';
+            } else {
+                echo '<script>';
+                echo 'logDiv.innerHTML = "Sem registros";  ';
+                echo '</script>';
+                $token = '';
+            }
+            flush();
+        }
+        echo '<br><br><br>';
+        echo '<br><br><br>';
+        /*********** Atualizar */
+
+        echo '<script>';
+        echo 'logDiv.innerHTML = "Atualizando estatística";  ';
+        echo '</script>';
+        flush();
+        $tot = $OaiRecordModel->select("count(*) as total")->where('repository', $id)->first();
+
+        $SummaeryModel = new \App\Models\SummaryModel();
+        $SummaeryModel->register('records', $tot['total'] ?? 0, $id);
+
+        echo '<script>';
+        echo 'logDiv.innerHTML = "Fim da Coleta";  ';
+        echo '</script>';
+        echo '<br>';
+        echo '<a href="' . base_url('/repository/view/' . $id) . '" class="btn btn-primary mt-2 mb-3">Voltar</a>';
+        echo "</div></div>";
+        flush();
+    }
 
     /*********** OAI */
     /* Identify */
@@ -188,7 +311,7 @@ class Repository extends BaseController
     public function harvestingOAI($id)
     {
         $model = new \App\Models\RepositorioModel();
-        $data = $model->find($id);
+        $data = $model->where('repository_id',$id)->first();
 
         $OaiIdentify = new \App\Libraries\OaiService();
         $identify = $OaiIdentify->identify($data['base_url']);
@@ -198,7 +321,7 @@ class Repository extends BaseController
             if (!isset($identify['repositoryName'])) {
                 $identify['repositoryName'] = $identify['base_url'];
             }
-            $model->set($identify)->where('id', $id)->update();
+            $model->set($identify)->where('repository_id', $id)->update();
             return redirect()->to('/repository/view/' . $id);
         } else {
             echo '<h3>Erro ao conectar com o repositório</h3>';
@@ -215,9 +338,9 @@ class Repository extends BaseController
         $SummaeryModel = new \App\Models\SummaryModel();
 
         $repositorioModel = new \App\Models\RepositorioModel();
-        $data['r'] = $repositorioModel->find($id);
+        $data['r'] = $repositorioModel->where('repository_id', $id)->first();
 
-        $ind = ['sets', 'records'];
+        $ind = ['sets', 'records', 'regs_1_0', 'regs_0_1'];
 
         foreach ($ind as $i) {
             $dt = $SummaeryModel->getIndicator($i, $id);
@@ -229,10 +352,17 @@ class Repository extends BaseController
             $data['stats'][$i] = $dt['d_valor'] ?? 0;
         }
 
+        $OaiSetModel = new \App\Models\OaiSetModel();
+        $data['sets'] = $OaiSetModel->where('identify_id', $id)->findAll();
+
         $total = $SummaeryModel->getIndicator($ind[0], $id);
         $data['stats']['total_sets'] = $total['d_valor'] ?? 0;
         $total = $SummaeryModel->getIndicator($ind[1], $id);
         $data['stats']['total_records'] = $total['d_valor'] ?? 0;
+        $total = $SummaeryModel->getIndicator($ind[2], $id);
+        $data['stats']['total_records_coletados'] = $total['d_valor'] ?? 0;
+        $total = $SummaeryModel->getIndicator($ind[3], $id);
+        $data['stats']['total_records_deleted'] = $total['d_valor'] ?? 0;
         //$data['stats']['ultima_coleta'] = max(array_column($data['sets'], 'last_collected'));
         //$data['stats']['total_autores'] = count(array_unique(array_column($data['sets'], 'author')));
         //$data['stats']['total_keywords'] = count(array_unique(array_column($data['sets'], 'keywords')));
@@ -248,15 +378,14 @@ class Repository extends BaseController
 
     public function harvesting_sets($id)
     {
-
+        $SetModel = new \App\Models\OaiSetModel();
         $model = new \App\Models\RepositorioModel();
-        $data = $model->find($id);
+        $data = $model->where('repository_id', $id)->first();
 
         $OaiIdentify = new \App\Libraries\OaiService();
         $sets = $OaiIdentify->listSets($data['base_url'], $id);
 
         if (isset($sets['sets'])) {
-            $SetModel = new \App\Models\OaiSetModel();
             foreach ($sets['sets'] as $s) {
                 $s['identify_id'] = $id;
                 $s['set_description'] = '';
@@ -266,6 +395,17 @@ class Repository extends BaseController
                 if (!$existing) {
                     $SetModel->insert($s);
                 }
+            }
+        } else {
+            $s['identify_id'] = $id;
+            $s['set_description'] = '';
+            $s['set_spec'] = '';
+            $s['set_name'] = 'Padrão';
+
+            // verifica se já existe
+            $existing = $SetModel->where('set_spec', $s['set_spec'])->where('identify_id', $id)->first();
+            if (!$existing) {
+                $SetModel->insert($s);
             }
         }
 
@@ -289,7 +429,7 @@ class Repository extends BaseController
         set_time_limit(0); //
 
         $model = new \App\Models\RepositorioModel();
-        $data = $model->find($id);
+        $data = $model->where('repository_id', $id)->first();
 
         // Forçar saída imediata (desabilitar buffer do CI4)
         while (ob_get_level() > 0) {

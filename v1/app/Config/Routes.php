@@ -8,6 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 
 //$routes->get('/repositorios', 'Repositorios::index');
 $routes->get('/repository/view/(:num)', 'Repository::views/$1');
+$routes->get('/repositorios/sets/show/(:num)', 'Repository::sets_show/$1');
+$routes->get('/repository/record_view/(:num)', 'Repository::record_view/$1');
 //$routes->get('/repositorios/create', 'Repository::create');
 //$routes->get('/repositorios/edit/(:num)', 'Repository::edit/$1');
 //$routes->get('/repositorios/copy/(:num)', 'Repository::copy/$1');
@@ -27,6 +29,7 @@ $routes->get('/repository/url_check', 'Repository::url_check');
 $routes->get('/oai/identify/(:num)', 'Repository::harvestingOAI/$1');
 $routes->get('/oai/sets/(:num)', 'Repository::harvesting_sets/$1');
 $routes->get('/oai/register/(:num)', 'Repository::harvesting_register/$1');
+$routes->get('/oai/records/(:num)', 'Repository::harvestingOAIrecords/$1');
 $routes->get('/indicadores', 'Indicadores::index');
 
 

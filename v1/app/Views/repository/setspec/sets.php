@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container container_simori mt-4">
     <h2 class="mb-4 text-success">
         <i class="bi bi-diagram-3"></i> Sets do Repositório #<?= esc($identify_id) ?>
     </h2>
@@ -10,8 +10,8 @@
                     <div class="card shadow-sm h-100 border-0">
                         <div class="card-body">
                             <h5 class="card-title text-primary"><?= esc($s['set_name']) ?></h5>
-                            <p class="card-text small text-muted mb-2">
-                                <i class="bi bi-code-slash"></i> <strong>Spec:</strong> <?= esc($s['set_spec']) ?>
+                            <p class="card-text small text-muted mb-1">
+                                <i class="bi bi-tag"></i> <strong>Spec:</strong> <code><?= esc($s['set_spec']) ?></code>
                             </p>
                             <?php if (!empty($s['set_description'])): ?>
                                 <p class="card-text"><?= esc($s['set_description']) ?></p>
@@ -20,13 +20,8 @@
                             <?php endif; ?>
                         </div>
                         <div class="card-footer bg-light d-flex justify-content-between">
-                            <a href="<?= base_url('/repositorios/sets/edit/' . $s['id']) ?>" class="btn btn-sm btn-outline-warning">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a href="<?= base_url('/repositorios/sets/delete/' . $s['id']) ?>"
-                                class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Tem certeza que deseja excluir este SET?')">
-                                <i class="bi bi-trash"></i> Delete
+                            <a href="<?= base_url('/repositorios/sets/show/' . $s['id']) ?>" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> Ver
                             </a>
                         </div>
                     </div>

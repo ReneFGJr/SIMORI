@@ -16,6 +16,7 @@ class RepositorioModel extends Model
         'admin_email',
         'earliest_datestamp',
         'deleted_record',
-        'granularity'
+        'granularity',
+        'repository_id'
     ];
 }
