@@ -48,6 +48,21 @@ class OaiTriplesModel extends Model
             ->findAll();
     }
 
+    function get_property_group($prop, $repo, $type='total', $order='DESC')
+    {
+        $RSP = '';
+        $OAItriples = new \App\Models\OaiTriplesModel();
+        $sets = $OAItriples->select('count(*) as total, value as concept')
+            ->where('repository_id', $repo)
+            ->where('property', $prop)
+            ->groupBy('value')
+            ->orderBy($type, $order)
+            ->findAll();
+
+
+        return $sets;
+    }
+
     function clean_oai_xml(string $xmlString): array
     {
         $result = [];

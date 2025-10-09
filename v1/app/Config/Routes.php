@@ -14,6 +14,9 @@ $routes->get('/repository/record_harvest/(:num)', 'Repository::record_harvest/$1
 $routes->get('/repository/record_extract_harvest/(:num)', 'Repository::record_extract_harvest/$1');
 $routes->get('/repository/records_extract/(:num)', 'Repository::records_extract/$1');
 
+$routes->get('/repository/subject/(:num)', 'Repository::list_subject/$1');
+$routes->get('/repository/creator/(:num)', 'Repository::list_creator/$1');
+
 //$routes->get('/repositorios/create', 'Repository::create');
 //$routes->get('/repositorios/edit/(:num)', 'Repository::edit/$1');
 //$routes->get('/repositorios/copy/(:num)', 'Repository::copy/$1');

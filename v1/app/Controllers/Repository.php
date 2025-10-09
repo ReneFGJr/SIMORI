@@ -274,6 +274,31 @@ class Repository extends BaseController
         return redirect()->to('/repository/show/' . $id)->with('success', 'Repositório atualizado!');
     }
 
+    function list_subject($id)
+        {
+            $OaiTriplesModel = new \App\Models\OaiTriplesModel();
+            $data['triplesA'] = $OaiTriplesModel->get_property_group('subject', $id);
+            $data['triplesB'] = $OaiTriplesModel->get_property_group('subject', $id, 'value','ASC');
+            $data['id_rp'] = $id;
+            $RSP = view('layout/header');
+            $RSP .= view('layout/navbar');
+            $RSP .= view('repository/list_subject', $data);
+            $RSP .= view('layout/footer');
+            return $RSP;
+        }
+
+    function list_creator($id)
+    {
+        $OaiTriplesModel = new \App\Models\OaiTriplesModel();
+        $data['triplesA'] = $OaiTriplesModel->get_property_group('creator', $id);
+        $data['triplesB'] = $OaiTriplesModel->get_property_group('creator', $id, 'value', 'ASC');
+        $data['id_rp'] = $id;
+        $RSP = view('layout/header');
+        $RSP .= view('layout/navbar');
+        $RSP .= view('repository/list_creator', $data);
+        $RSP .= view('layout/footer');
+        return $RSP;
+    }
     // 📍 Excluir
     public function delete($id)
     {

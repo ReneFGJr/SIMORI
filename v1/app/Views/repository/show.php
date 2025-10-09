@@ -80,6 +80,14 @@
                             <a href="<?= base_url('/repository/edit/' . $repo['id_rp']) ?>" class="btn btn-outline-warning">
                                 <i class="bi bi-pencil-square"></i> Editar
                             </a>
+
+                            <a href="<?= base_url('/repository/subject/' . $repo['id_rp']) ?>" class="btn btn-outline-success">
+                                <i class="bi bi-list"></i> Assuntos
+                            </a>
+
+                            <a href="<?= base_url('/repository/creator/' . $repo['id_rp']) ?>" class="btn btn-outline-success">
+                                <i class="bi bi-list"></i> Criadores/Author
+                            </a>
                         <?php endif; ?>
                     </div>
                 </div>
