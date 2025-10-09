@@ -37,6 +37,11 @@
                     <?= $reg['deleted'] ? '<span class="badge bg-danger">Sim</span>' : '<span class="badge bg-success">Não</span>' ?>
                 </dd>
             </dl>
+
+            <a href="<?= base_url('repository/record_extract_harvest/' . $reg['id']) ?>" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-file-earmark-arrow-down"></i> Extrair metadados
+            </a>
+
         </div>
     </div>
 
@@ -118,6 +123,7 @@
                     <i class="bi bi-code-slash me-2"></i> Ver XML bruto
                 </button>
             </h2>
+
             <div id="collapseXML" class="accordion-collapse collapse" aria-labelledby="headingXML" data-bs-parent="#xmlAccordion">
                 <div class="accordion-body">
                     <pre style="white-space: pre-wrap; font-size: 0.9rem; background-color: #f8f9fa; padding: 1rem; border-radius: 6px; border: 1px solid #ddd;">

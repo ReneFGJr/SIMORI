@@ -158,6 +158,17 @@ class Repository extends BaseController
         $RepoAnalyse->analyse($id);
     }
 
+    public function record_extract_harvest($id)
+    {
+        $OaiRecordModel = new \App\Models\OaiRecordModel();
+        $data = $OaiRecordModel->where('id',$id)->first();
+
+        $OaiTriplesModel = new \App\Models\OaiTriplesModel();
+        $OaiTriplesModel->extract_triples($data);
+
+        return redirect()->to('/repository/record_view/'.$id)->with('success', 'Extração concluída!');
+    }
+
 
 
 

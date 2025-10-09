@@ -165,16 +165,19 @@ class OaiRecordModel extends Model
             ->first();
         if (!$exists) {
             // Se não existe, insere
+            if ($s['setSpec'] === null) {
+                $setSpec = '';
+            } else {
+                $setSpec = $s['setSpec'];
+            }
             $dt = [
                 'repository'     => $s['repository_id'],
                 'oai_identifier' => $s['identifier'],
                 'datestamp'      => $s['datestamp'],
-                'setSpec'        => $s['setSpec'],
+                'setSpec'        => $setSpec,
                 'deleted'        => $s['deleted'],
                 'harvesting'     => 0
             ];
-            //pre($dt);
-
 
             $this->insert($dt);
             return 1;
