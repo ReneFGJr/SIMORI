@@ -96,7 +96,7 @@
                     <div class="card border-0 bg-light shadow-sm">
                         <div class="card-body">
                             <h4 class="card-title text-primary"><i class="bi bi-file-text"></i> Resumo</h4>
-                            <p class="card-text"><?= esc($repo['rp_summary']) ?: '<span class="text-muted">Sem resumo disponível.</span>' ?></p>
+                            <p class="card-text"><?= ($repo['rp_summary']) ?: '<span class="text-muted">Sem resumo disponível.</span>' ?></p>
                         </div>
                     </div>
                 </div>

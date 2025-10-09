@@ -54,7 +54,16 @@ class RepositoryModel extends Model
 
     function get_summary($id=0)
         {
-            $RSP = 'Summary';
+            $RSP = '';
+            $Indicadores = new \App\Models\IndicatorModel();
+            $data = $Indicadores->resumo($id);
+
+            $inds = $data['repos'][0]['inds'];
+
+            foreach ($inds as $ind) {
+                $RSP .= '<li><strong>' . lang($ind['label']) . ':</strong> ' . number_format($ind['d_valor'], 0, ',', '.') . '</li>';
+            }
+
             return $RSP;
         }
 
