@@ -340,18 +340,18 @@ class Repository extends BaseController
 
     public function harvestingOAI($id)
     {
-        $model = new \App\Models\RepositorioModel();
-        $data = $model->where('repository_id',$id)->first();
+        $model = new \App\Models\RepositoryModel();
+        $model2 = new \App\Models\RepositorioModel();
+        $data = $model->where('id_rp', $id)->first();
 
         $OaiIdentify = new \App\Libraries\OaiService();
-        $identify = $OaiIdentify->identify($data['base_url']);
-
+        $identify = $OaiIdentify->identify($data['rp_url_oai']);
 
         if (isset($identify['base_url'])) {
             if (!isset($identify['repositoryName'])) {
                 $identify['repositoryName'] = $identify['base_url'];
             }
-            $model->set($identify)->where('repository_id', $id)->update();
+            $model2->set($identify)->where('repository_id', $id)->update();
             return redirect()->to('/repository/view/' . $id);
         } else {
             echo '<h3>Erro ao conectar com o repositório</h3>';

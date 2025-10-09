@@ -144,7 +144,6 @@ class OaiService
     public function identify(string $baseUrl): ?array
     {
         $url = rtrim($baseUrl, '/') . '?verb=Identify';
-        echo $url;
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

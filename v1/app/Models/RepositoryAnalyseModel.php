@@ -202,7 +202,7 @@ class RepositoryAnalyseModel extends Model
             case 'Identify':
                 if ($this->status['OAI-PMH'] == 1) {
                     $url = trim($repo['rp_url_oai']) . '?verb=Identify';
-                    $mesg = 'Verificando URL-OAI: <a href="' . esc($url) . '?verb=Identify" target="_blank">' . esc($repo['rp_url_oai']) . '</a>...';
+                    $mesg = 'Verificando URL-OAI: <a href="' . esc($url) . '?verb=Identify" target="_blank">' . esc($url) . '</a>...';
                     $RepositoryType = new \App\Models\RepositoryTypeModel();
                     $type = $RepositoryType->identify_oai($url);
 
