@@ -75,7 +75,6 @@ class SummaryModel extends Model
                 ->update();
         } else {
             // Insere novo registro
-            echo "Inserindo novo registro<br>";
             return (bool) $this->insert($data);
         }
     }
