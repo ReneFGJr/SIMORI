@@ -40,7 +40,7 @@
                             <tbody>
                                 <?php foreach ($r['inds'] as $ind): ?>
                                     <tr>
-                                        <td><?= esc($ind['d_indicator']) ?></td>
+                                        <td><?= lang('App.'.esc($ind['d_indicator'])) ?></td>
                                         <td><?= esc($ind['d_valor']) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
