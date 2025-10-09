@@ -52,7 +52,6 @@ class SummaryModel extends Model
 
     public function register(string $indicator, int $value, int $repository): bool
     {
-        echo "<br>Registrando estatística: $indicator = $value para o repositório $repository<br>";
         $data = [
             'd_indicator'  => $indicator,
             'd_valor'      => $value,

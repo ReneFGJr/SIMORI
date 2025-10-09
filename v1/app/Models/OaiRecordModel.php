@@ -229,10 +229,8 @@ class OaiRecordModel extends Model
                 }
             foreach($setsR as $k=>$v)
                 {
-                    echo $k.'='.$v.'<br>';
                     $SummaryModel->register('triples_'.$k, $v, $id);
                 }
-                pre($setsR);
             return 0;
         }
     function register($s)
