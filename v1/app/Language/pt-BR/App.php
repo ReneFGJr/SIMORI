@@ -8,4 +8,5 @@ return [
     'triples_creator' => '<span class="text-primary">Total de autores distintos</span>',
     'triples_contributor' => '<span class="text-secondary">Total de contribuidores distintos</span>',
     'triples_subject' => '<span class="text-info">Total de assuntos distintos</span>',
+    'regs_0_0' => '<span class="text-muted">Registros para coletar</span>',
 ];
