@@ -61,6 +61,62 @@ class OaiRecordModel extends Model
         $Record->set($dt)->where('id', $r['id'])->update();
         return '';
     }
+
+    public function collect_extract($repo_id)
+    {
+        $Repo = new RepositorioModel();
+        $Record = new \App\Models\OaiRecordModel();
+        $OaiTriplesModel = new \App\Models\OaiTriplesModel();
+        $OaiSetModel = new \App\Models\OaiSetModel();
+
+        // Recupera informações do repositório
+        $repo = $Repo->where('repository_id', $repo_id)->first();
+
+        if (!$repo) {
+            return "Repositório não encontrado.";
+        }
+
+        $records = $Record
+            ->where('repository', $repo_id)
+            ->where('status',1)
+            ->where('deleted',0)
+            ->where('harvesting',1)
+            ->where('xml IS NOT NULL', null, false)
+            ->findAll();
+
+       // 🔹 3. Para cada registro, baixa o XML via GetRecord
+        $tot = 0;
+        foreach ($records as $r) {
+            $tot++;
+            $msg = 'Processando registro ID '.$tot.'/'.count($records).'<br>';
+            echo '<script>logDiv.innerHTML = "'.$msg.'";</script>' . chr(13);
+            flush();
+
+            $identifier = trim($r['oai_identifier']);
+            $setSpecName = $r['setSpec'];
+
+            $setSpec = $OaiSetModel->where('identify_id', $repo_id)
+                ->where('set_spec', $setSpecName)
+                ->first()['id'] ?? '';
+            if ($identifier == '') continue;
+            $msg.= "🔹 Processando: <code>{$identifier}</code><br>";
+            $msg .= "setSpec: <code>{$setSpecName}</code> (ID: {$setSpec})<br>";
+            $OaiTriplesModel->extract_triples($r, $setSpec, $repo_id);
+
+            $Record->set(['harvesting' => 2])->where('id', $r['id'])->update();
+            $msg .= "✅ Extração concluída para <b>{$identifier}</b><br><br>";
+            echo '<script>logDiv.innerHTML = "'.$msg.'";</script>' . chr(13);
+            flush();
+        }
+
+        $msg = "<hr>🏁 Extração finalizada para o repositório.";
+        $msg .= '<br><a href="' . base_url('repository/show/' . $repo_id) . '" class="btn btn-sm btn-outline-primary mt-3"><i class="bi bi-arrow-left"></i> Voltar ao Repositório</a>';
+        echo $msg;
+        flush();
+
+        $this->make_stats($repo_id);
+    }
+
     public function collect($repo_id)
     {
         $Repo = new RepositorioModel();
@@ -102,7 +158,11 @@ class OaiRecordModel extends Model
         }
 
         echo "<hr>🏁 Coleta finalizada para o repositório.";
+        echo '<br><a href="'.base_url('repository/show/'.$repo_id).'" class="btn btn-sm btn-outline-primary mt-3"><i class="bi bi-arrow-left"></i> Voltar ao Repositório</a>';
         flush();
+
+        // Atualiza estatísticas
+        $this->make_stats($repo_id);
     }
 
     /**
@@ -152,6 +212,27 @@ class OaiRecordModel extends Model
                 {
                     $SummaryModel->register('regs_'.$s['status'].'_'.$s['deleted'], $s['total'], $id);
                 }
+            /* Dados estatísticos dos triples */
+            $OAItriples = new \App\Models\OaiTriplesModel();
+            $sets = $OAItriples->select('count(*) as total, property, value')
+                    ->where('repository_id', $id)
+                    ->groupBy('property, value')
+                    ->findAll();
+            $setsR = [];
+            foreach($sets as $s)
+                {
+                    if (!isset($setsR[$s['property']]))
+                        {
+                            $setsR[$s['property']] = 0;
+                        }
+                    $setsR[$s['property']]++;
+                }
+            foreach($setsR as $k=>$v)
+                {
+                    echo $k.'='.$v.'<br>';
+                    $SummaryModel->register('triples_'.$k, $v, $id);
+                }
+                pre($setsR);
             return 0;
         }
     function register($s)

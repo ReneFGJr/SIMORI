@@ -27,7 +27,7 @@ class SummaryModel extends Model
 
     // Validações
     protected $validationRules = [
-        'd_indicator' => 'required|min_length[2]|max_length[10]',
+        'd_indicator' => 'required|min_length[2]|max_length[30]',
         'd_valor'     => 'required|integer'
     ];
 
@@ -52,6 +52,7 @@ class SummaryModel extends Model
 
     public function register(string $indicator, int $value, int $repository): bool
     {
+        echo "<br>Registrando estatística: $indicator = $value para o repositório $repository<br>";
         $data = [
             'd_indicator'  => $indicator,
             'd_valor'      => $value,
@@ -75,6 +76,7 @@ class SummaryModel extends Model
                 ->update();
         } else {
             // Insere novo registro
+            echo "Inserindo novo registro<br>";
             return (bool) $this->insert($data);
         }
     }

@@ -24,6 +24,43 @@ class Repository extends BaseController
         return $RSP;
     }
 
+    public function records_extract($id) : string
+    {
+        set_time_limit(0); //
+
+        $model = new \App\Models\RepositorioModel();
+        $data = $model->where('repository_id', $id)->first();
+
+        // Forçar saída imediata (desabilitar buffer do CI4)
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+        ob_implicit_flush(true);
+
+        header('Content-Type: text/html; charset=utf-8');
+        header('Cache-Control: no-cache');
+        header('X-Accel-Buffering: no'); // nginx não bufferizar
+
+        echo view('layout/header');
+        echo view('layout/navbar');
+        echo view('layout/footer');
+        echo '<div class="container container_simori mt-5 p-4">';
+        echo "<h3>Analisando repositório: " . esc($data['repository_name']) . "</h3>";
+        echo "<div id='log'>";
+        flush();
+
+        $OaiRecordModel = new \App\Models\OaiRecordModel();
+
+        $OaiIdentify = new \App\Libraries\OaiService();
+        $sets = $OaiIdentify->listIdentifiers($data['base_url'], $id, '');
+        $token = 'inicio';
+        echo '<div id="log">Iniciando processo de extração de records</div>';
+        echo '<script>let logDiv = document.getElementById("log");</script>' . chr(13);
+        $OaiRecordModel = new \App\Models\OaiRecordModel();
+        $OaiRecordModel->collect_extract($id);
+        exit;
+    }
+
     public function sets_show($id) : string
     {
         $SetModel = new \App\Models\OaiSetModel();
@@ -163,8 +200,16 @@ class Repository extends BaseController
         $OaiRecordModel = new \App\Models\OaiRecordModel();
         $data = $OaiRecordModel->where('id',$id)->first();
 
+        $id_repository = $data['repository'];
+        $setSpecName = $data['setSpec'];
+
+        $OaiSetModel = new \App\Models\OaiSetModel();
+        $setSpec = $OaiSetModel->where('identify_id',$id_repository)
+                               ->where('set_spec',$setSpecName)
+                               ->first()['id'] ?? '';
+
         $OaiTriplesModel = new \App\Models\OaiTriplesModel();
-        $OaiTriplesModel->extract_triples($data);
+        $OaiTriplesModel->extract_triples($data,$setSpec,$id_repository);
 
         return redirect()->to('/repository/record_view/'.$id)->with('success', 'Extração concluída!');
     }
@@ -288,48 +333,6 @@ class Repository extends BaseController
         $OaiRecordModel = new \App\Models\OaiRecordModel();
         $OaiRecordModel->collect($id);
         exit;
-        while ($token != '') {
-            //echo "Coletados ".count($sets[0])." registros...(".$token.") ";
-            flush();
-            $token = $sets[1];
-            //echo "Novos: " . $OaiRecordModel->registers($sets[0]);
-            //echo '<br>';
-
-            flush();
-            $sets = $OaiIdentify->listIdentifiers($data['base_url'], $id, $token);
-            if (isset($sets[0])) {
-                $OaiRecordModel->registers($sets[0]);
-                echo '<script>';
-                echo 'logDiv.innerHTML = "Coletados ' . count($sets[0]) . ' registros...(' . $token . ')";  ';
-                echo '</script>';
-            } else {
-                echo '<script>';
-                echo 'logDiv.innerHTML = "Sem registros";  ';
-                echo '</script>';
-                $token = '';
-            }
-            flush();
-        }
-        echo '<br><br><br>';
-        echo '<br><br><br>';
-        /*********** Atualizar */
-
-        echo '<script>';
-        echo 'logDiv.innerHTML = "Atualizando estatística";  ';
-        echo '</script>';
-        flush();
-        $tot = $OaiRecordModel->select("count(*) as total")->where('repository', $id)->first();
-
-        $SummaeryModel = new \App\Models\SummaryModel();
-        $SummaeryModel->register('records', $tot['total'] ?? 0, $id);
-
-        echo '<script>';
-        echo 'logDiv.innerHTML = "Fim da Coleta";  ';
-        echo '</script>';
-        echo '<br>';
-        echo '<a href="' . base_url('/repository/view/' . $id) . '" class="btn btn-primary mt-2 mb-3">Voltar</a>';
-        echo "</div></div>";
-        flush();
     }
 
     /*********** OAI */

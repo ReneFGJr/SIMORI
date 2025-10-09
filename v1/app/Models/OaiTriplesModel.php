@@ -15,7 +15,9 @@ class OaiTriplesModel extends Model
     protected $allowedFields = [
         'record_id',
         'property',
-        'value'
+        'value',
+        'setspec',
+        'repository_id'
     ];
 
     // Validação opcional
@@ -79,15 +81,12 @@ class OaiTriplesModel extends Model
                 $name = $child->getName();
                 $value = trim((string)$child);
 
-
                 if (!isset($result[$name])) {
                     $result[$name] = [];
                 }
-
                 $result[$name][] = $value;
             }
         }
-
         return $result;
     }
 
@@ -95,16 +94,14 @@ class OaiTriplesModel extends Model
     /**
      * 🧩 Extrai e armazena triples a partir do XML Dublin Core de um registro OAI-PMH
      */
-    public function extract_triples(array $record): void
+    public function extract_triples(array $record, $setSpec, $repository): void
     {
         $data = $this->clean_oai_xml($record['xml']);
 
-        foreach($data as $property => $values) {
-            echo "Propriedade: $property<br>";
+        foreach ($data as $property => $values) {
             if (($property == 'creator') or ($property == 'contributor') or ($property == 'subject')) {
-                foreach($values as $v) {
-                    echo "- Valor: $v<br>";
-                    $this->setTriple($record['id'], $property, $v);
+                foreach ($values as $v) {
+                    $this->setTriple($record['id'], $property, $v, $setSpec, $repository);
                 }
             }
         }
@@ -113,7 +110,7 @@ class OaiTriplesModel extends Model
     /**
      * 🧩 Insere ou atualiza uma propriedade de um registro
      */
-    public function setTriple(int $record_id, string $property, string $value): bool
+    public function setTriple(int $record_id, string $property, string $value, string $setSpec, int $repository): bool
     {
         $existing = $this->where('record_id', $record_id)
             ->where('property', $property)
@@ -123,7 +120,9 @@ class OaiTriplesModel extends Model
         $data = [
             'record_id' => $record_id,
             'property'  => $property,
-            'value'     => $value
+            'value'     => $value,
+            'setspec'  => $setSpec,
+            'repository_id' => $repository
         ];
 
         if ($existing) {

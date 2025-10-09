@@ -12,6 +12,7 @@ $routes->get('/repositorios/sets/show/(:num)', 'Repository::sets_show/$1');
 $routes->get('/repository/record_view/(:num)', 'Repository::record_view/$1');
 $routes->get('/repository/record_harvest/(:num)', 'Repository::record_harvest/$1');
 $routes->get('/repository/record_extract_harvest/(:num)', 'Repository::record_extract_harvest/$1');
+$routes->get('/repository/records_extract/(:num)', 'Repository::records_extract/$1');
 
 //$routes->get('/repositorios/create', 'Repository::create');
 //$routes->get('/repositorios/edit/(:num)', 'Repository::edit/$1');

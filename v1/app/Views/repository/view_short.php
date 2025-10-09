@@ -46,6 +46,9 @@
 
                     <!-- Rodapé -->
                     <div class="card-footer bg-light d-flex justify-content-end gap-2">
+                        <a href="<?= base_url('/repository/records_extract/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> Processar Records
+                        </a>
 
                         <a href="<?= base_url('/oai/records/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye"></i> Coletar Records
