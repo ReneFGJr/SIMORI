@@ -64,17 +64,34 @@
                         </select>
                     </div>
 
-                    <!-- BOTÕES -->
-                    <div class="col-12 mt-3 d-flex flex-wrap gap-2">
-                        <button type="submit" class="btn btn-warning">
-                            <i class="bi bi-check-circle"></i> Atualizar
-                        </button>
-                        <a href="<?= base_url('/repository') ?>" class="btn btn-outline-secondary">
-                            <i class="bi bi-arrow-left"></i> Cancelar
-                        </a>
+                    <!-- Cidade -->
+                    <div class="col-lg-4 col-12">
+                        <label class="form-label fw-bold"><i class="bi bi-geo-alt"></i> Cidade</label>
+
+                        <select name="rp_cidade" class="form-select">
+                            <option value="">Selecione...</option>
+                            <?php foreach ($cities as $city): ?>
+                                <option value="<?= esc($city['id_city']) ?>" <?= $repo['rp_cidade'] == $city['id_city'] ? 'selected' : '' ?>>
+                                    <?= esc($city['city_name']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
+
+                    </select>
                 </div>
-            </form>
+
+                <!-- BOTÕES -->
+                <div class="col-12 mt-3 d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="bi bi-check-circle"></i> Atualizar
+                    </button>
+                    <a href="<?= base_url('/repository') ?>" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                </div>
         </div>
+        </form>
     </div>
+</div>
 </div>

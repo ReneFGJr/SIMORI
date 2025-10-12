@@ -237,6 +237,7 @@ class Repository extends BaseController
             'rp_url'    => $this->request->getPost('rp_url'),
             'rp_status' => $this->request->getPost('rp_status'),
             'rp_update' => $this->request->getPost('rp_update'),
+            'rp_cidade' => $this->request->getPost('rp_cidade'),
             'rp_plataforma' => $this->request->getPost('rp_plataforma'),
             'rp_instituicao' => $this->request->getPost('rp_instituicao')
         ]);
@@ -251,6 +252,11 @@ class Repository extends BaseController
         $data['repo'] = $Repo->find($id);
         $RSP = view('layout/header');
         $RSP .= view('layout/navbar');
+
+        /* Cidades */
+        $CityModel = new \App\Models\CityModel();
+        $data['cities'] = $CityModel->orderBy('city_name','ASC')->findAll();
+
         $RSP .= view('repository/edit', $data);
         $RSP .= view('layout/footer');
 
@@ -267,6 +273,7 @@ class Repository extends BaseController
             'rp_url_oai'=> $this->request->getPost('rp_url_oai'),
             'rp_status' => 0,
             'rp_update' => $this->request->getPost('rp_update'),
+            'rp_cidade' => $this->request->getPost('rp_cidade'),
             'rp_instituicao' => $this->request->getPost('rp_instituicao'),
             'rp_plataforma' => $this->request->getPost('rp_plataforma')
         ];

@@ -20,6 +20,7 @@ class RepositoryModel extends Model
         'rp_instituicao',
         'rp_plataforma',
         'rp_versao',
+        'rp_cidade',
         'rp_update',
         'rp_url_oai',
         'created_at'

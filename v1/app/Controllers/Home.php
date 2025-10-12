@@ -11,6 +11,11 @@ class Home extends BaseController
         $RSP .= view('layout/navbar');
         $RSP .= view('welcome_logo');
         $RSP .= view('welcome_message');
+        /******************** World Map */
+        $IndicatorModel = new \App\Models\IndicatorModel();
+        $data = $IndicatorModel->getDataMaps();
+        $RSP .= view('mapa/world_map', $data);
+
         $RSP .= view('layout/footer');
         return $RSP;
     }

@@ -15,6 +15,19 @@ class IndicatorModel extends Model
         'd_repository'
     ];
 
+    public function getDataMaps()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->query("
+            SELECT `rp_name` as p_name, city_name, latitude, longitude
+            FROM `repository`
+            inner join geo_city ON rp_cidade = id_city
+            WHERE 1;
+        ");
+        $repos = $query->getResultArray();
+        return ['repos' => $repos];
+    }
+
     public function resumo($id)
     {
         $RepoModel = new RepositoryModel();
