@@ -151,6 +151,9 @@ class Repository extends BaseController
             case 'Omeka-S':
                 $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
                 break;
+            case 'OJS':
+                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
+                break;                
             case 'Fedora':
                 // Exemplo: https://example.com/fedora/oai?verb=Identify
                 $url .= (str_ends_with($url, '/') ? '' : '/') . 'fedora/oai';

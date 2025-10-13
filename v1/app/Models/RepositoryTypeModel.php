@@ -40,6 +40,7 @@ class RepositoryTypeModel extends Model
             'Omeka-S',
             'Dataverse',
             'Fedora',
+            'OJS',
             'Outros'
         ];
         return $types;
@@ -58,8 +59,9 @@ class RepositoryTypeModel extends Model
             return 'Dataverse,' . $version;
         } elseif (stripos($html, 'omeka') !== false) {
             return 'Omeka-S';
-        } elseif (stripos($html, 'fedora') !== false) {
-            return 'Fedora';
+        } elseif (stripos($html, 'Open Journal Systems') !== false) {
+            $version = $this->ojs_version($html);
+            return 'OJS,'.$version;
         } else {
             return '';
         }
@@ -139,6 +141,19 @@ class RepositoryTypeModel extends Model
         // Caso não tenha formato esperado
         $GLOBALS['oai_error'] = "Resposta não parece ser um OAI-PMH válido.";
         return 0;
+    }
+
+    
+    function ojs_version($txt)
+    {
+        $version = '';
+        $st = 'meta name="generator" content="Open Journal Systems ';
+        if (strpos($txt, $st) !== false) {
+            $pos = strpos($txt, $st) + strlen($st);
+            $version = substr($txt, $pos, 8);
+            $version = substr($version, 0, strcspn($version, '"\'&<> '));
+        }
+        return $version;
     }
 
     function dataverse_version($txt)
