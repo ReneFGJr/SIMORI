@@ -90,7 +90,6 @@ class OaiRecordModel extends Model
             $tot++;
             $msg = 'Processando registro ID '.$tot.'/'.count($records).'<br>';
             echo '<script>logDiv.innerHTML = "'.$msg.'";</script>' . chr(13);
-            flush();
 
             $identifier = trim($r['oai_identifier']);
             $setSpecName = $r['setSpec'];
