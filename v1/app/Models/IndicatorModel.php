@@ -25,7 +25,6 @@ class IndicatorModel extends Model
                 ->groupBy('period')
                 ->orderBy('period', 'ASC')
                 ->findAll();
-            pre($dt);
             return $dt;
         }
 
