@@ -15,6 +15,18 @@ class IndicatorModel extends Model
         'd_repository'
     ];
 
+    public function productionYear($jid)
+        {
+
+            $Triples = new \App\Models\OaiTriplesModel();
+            $dt = $Triples->select("DATE_FORMAT(value, '%Y') AS period, COUNT(*) AS total")
+                ->where('property', 'date')
+                ->groupBy('period')
+                ->orderBy('period', 'ASC')
+                ->findAll();
+            return $dt;
+        }
+
     public function getDataMaps()
     {
         $db = \Config\Database::connect();

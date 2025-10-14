@@ -65,6 +65,8 @@ class RepositoryModel extends Model
                 $RSP .= '<li><strong>' . lang($ind['label']) . ':</strong> ' . number_format($ind['d_valor'], 0, ',', '.') . '</li>';
             }
 
+            $data['publicacoes'] = $Indicadores->productionYear($id);            
+            $RSP .= view('indicadores/grafico', $data);
             return $RSP;
         }
 
