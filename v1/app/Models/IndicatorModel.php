@@ -21,6 +21,7 @@ class IndicatorModel extends Model
             $Triples = new \App\Models\OaiTriplesModel();
             $dt = $Triples->select("DATE_FORMAT(value, '%Y') AS period, COUNT(*) AS total")
                 ->where('property', 'date')
+                ->where('repository',$jid)
                 ->groupBy('period')
                 ->orderBy('period', 'ASC')
                 ->findAll();
