@@ -114,7 +114,10 @@ class OaiTriplesModel extends Model
         $data = $this->clean_oai_xml($record['xml']);
 
         foreach ($data as $property => $values) {
-            if (($property == 'creator') or ($property == 'contributor') or ($property == 'subject')) {
+            if (($property == 'creator') 
+                    or ($property == 'contributor') 
+                    or ($property == 'subject')
+                    or ($property == 'date')) {
                 foreach ($values as $v) {
                     $this->setTriple($record['id'], $property, $v, $setSpec, $repository);
                 }
