@@ -112,15 +112,18 @@ class OaiTriplesModel extends Model
     public function extract_triples(array $record, $setSpec, $repository): void
     {
         $data = $this->clean_oai_xml($record['xml']);
+        $date = 0;
 
         foreach ($data as $property => $values) {
             if (($property == 'creator') 
                     or ($property == 'contributor') 
                     or ($property == 'subject')
                     or ($property == 'date')) {
-                foreach ($values as $v) {
-                    $this->setTriple($record['id'], $property, $v, $setSpec, $repository);
-                }
+                foreach ($values as $v) {                   
+                    if (($property == 'date') and ($date == 1)) { continue; }
+                    $this->setTriple($record['id'], $property, $v, $setSpec, $repository);                    
+                    if ($property == 'date') { $date = 1; }
+                }                
             }
         }
     }
