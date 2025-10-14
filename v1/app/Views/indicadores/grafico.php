@@ -2,7 +2,7 @@
 
 <div class="container py-4">
     <h4 class="text-primary"><i class="bi bi-calendar3"></i> Total de Publicações por Ano</h4>
-    <canvas id="graficoPublicacoes" height="100"></canvas>
+    <canvas id="graficoPublicacoes" height="200"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -28,7 +28,7 @@
             responsive: true,
             scales: {
                 y: { beginAtZero: true, title: { display: true, text: 'Total' }},
-                x: { title: { display: true, text: 'Ano-Mês' }}
+                x: { title: { display: true, text: 'Ano' }}
             }
         }
     });
