@@ -114,7 +114,6 @@ class OaiTriplesModel extends Model
         $data = $this->clean_oai_xml($record['xml']);
         $date = 0;
 
-        pre($data);
 
         foreach ($data as $property => $values) {
             if (($property == 'creator') 
@@ -123,11 +122,13 @@ class OaiTriplesModel extends Model
                     or ($property == 'date')) {
                 foreach ($values as $v) {                   
                     if (($property == 'date') and ($date == 1)) { continue; }
-                    $this->setTriple($record['id'], $property, $v, $setSpec, $repository);                    
+                    echo $property." = ".$v.'<br>';
+                    //$this->setTriple($record['id'], $property, $v, $setSpec, $repository);                    
                     if ($property == 'date') { $date = 1; }
                 }                
             }
         }
+        pre($data);
     }
 
     /**
