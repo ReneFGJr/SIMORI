@@ -114,6 +114,8 @@ class OaiTriplesModel extends Model
         $data = $this->clean_oai_xml($record['xml']);
         $date = 0;
 
+        pre($data);
+
         foreach ($data as $property => $values) {
             if (($property == 'creator') 
                     or ($property == 'contributor') 
