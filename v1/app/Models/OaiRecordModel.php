@@ -90,6 +90,7 @@ class OaiRecordModel extends Model
             $tot++;
             $msg = 'Processando registro ID '.$tot.'/'.count($records).'<br>';
             echo '<script>logDiv.innerHTML = "'.$msg.'";</script>' . chr(13);
+            flush();
 
             $identifier = trim($r['oai_identifier']);
             $setSpecName = $r['setSpec'];
@@ -103,9 +104,7 @@ class OaiRecordModel extends Model
             $OaiTriplesModel->extract_triples($r, $setSpec, $repo_id);
 
             $Record->set(['harvesting' => 2])->where('id', $r['id'])->update();
-            $msg .= "✅ Extração concluída para <b>{$identifier}</b><br><br>";
-            echo '<script>logDiv.innerHTML = "'.$msg.'";</script>' . chr(13);
-            flush();
+
         }
 
         $msg = "<hr>🏁 Extração finalizada para o repositório.";
