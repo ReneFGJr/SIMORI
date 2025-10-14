@@ -122,7 +122,7 @@ class OaiTriplesModel extends Model
                     or ($property == 'date')) {
                 foreach ($values as $v) {                   
                     if (($property == 'date') and ($date == 1)) { continue; }
-                    //$this->setTriple($record['id'], $property, $v, $setSpec, $repository);                    
+                    $this->setTriple($record['id'], $property, $v, $setSpec, $repository);                    
                     if ($property == 'date') { $date = 1; }
                 }                
             }
