@@ -28,6 +28,30 @@ class IndicatorModel extends Model
             return $dt;
         }
 
+    public function productionYearAcumulado($jid)
+    {
+
+        $Triples = new \App\Models\OaiTriplesModel();
+        $dt = $Triples->select("DATE_FORMAT(value, '%Y') AS period, COUNT(*) AS total, repository_id")
+            ->where('property', 'date')
+            ->where('repository_id', $jid)
+            ->groupBy('period')
+            ->orderBy('period', 'ASC')
+            ->findAll();
+
+        $dta = [];
+        $tot = 0;
+        foreach ($dt as $row) {
+            $tot = $tot + (int)$row['total'];
+            $dd = [];
+            $dd['period'] = $row['period'];
+            $dd['total'] = $tot;
+            $dd['repository_id'] = $row['repository_id'];
+            $dta[] = $dd;
+        }
+        return $dta;
+    }
+
     public function getDataMaps()
     {
         $db = \Config\Database::connect();

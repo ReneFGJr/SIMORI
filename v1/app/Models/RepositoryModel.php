@@ -65,8 +65,15 @@ class RepositoryModel extends Model
                 $RSP .= '<li><strong>' . lang($ind['label']) . ':</strong> ' . number_format($ind['d_valor'], 0, ',', '.') . '</li>';
             }
 
-            $data['publicacoes'] = $Indicadores->productionYear($id);            
+            $data['publicacoes'] = $Indicadores->productionYear($id);
+            $data['title'] = 'totalPublicacoesPorAno';
             $RSP .= view('indicadores/grafico', $data);
+
+            /* Acumulado */
+            $data['publicacoes'] = $Indicadores->productionYearAcumulado($id);
+            $data['title'] = 'totalPublicacoesPorAnoAcumulado';
+            $RSP .= view('indicadores/grafico_line', $data);
+
             return $RSP;
         }
 

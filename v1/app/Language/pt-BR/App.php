@@ -9,4 +9,6 @@ return [
     'triples_contributor' => '<span class="text-secondary">Total de contribuidores distintos</span>',
     'triples_subject' => '<span class="text-info">Total de assuntos distintos</span>',
     'regs_0_0' => '<span class="text-muted">Registros para coletar</span>',
+    'totalPublicacoesPorAnoAcumulado' => 'Total de Publicações por Ano (Acumulado)',
+    'totalPublicacoesPorAno' => 'Total de Publicações por Ano',
 ];
