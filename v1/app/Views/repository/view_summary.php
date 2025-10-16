@@ -57,7 +57,7 @@
         <div class="col-md-6 col-lg-4 col-xl-2">
             <div class="card shadow-sm h-100 border-0 text-center">
                 <div class="card-body">
-                    <a href="/repository/formats/<?=$r['repository_id'];?>" class="link2">
+                    <a href="<?=base_url("/repository/formats/");?><?=$r['repository_id'];?>" class="link2">
                     <i class="bi bi-diagram-2 text-warning" style="font-size:2rem;"></i>
                     <h6 class="mt-2 text-muted">Formatos OAI</h6>
                     <h3 class="fw-bold"><?= esc($stats['formats_oai'] ?? '—') ?></h3>
