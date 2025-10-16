@@ -376,12 +376,16 @@ class Repository extends BaseController
             $repositorioModel = new \App\Models\RepositorioModel();
             $data['r'] = $repositorioModel->where('repository_id', $id)->first();            
 
+            $oaiLista = new \App\Models\OaiMetadataFormatModel();
+            $data['formats'] = $oaiLista->where('repository_id', $id)->findAll();
+
             // envia o ID do repositório para referência
             $data['identify_id'] = $id;
             $html = view('layout/header', $data);
             $html .= view('layout/navbar', $data);
-            $html .= view('repository/view_format', $data);            
-            return $html . view('repository/setspec/sets', $data);
+            $html .= view('repository/view_short', $data);
+            $html .= view('repository/format_list', $data);            
+            return $html;
         }
 
     public function views($id)

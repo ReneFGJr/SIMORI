@@ -1,3 +1,4 @@
+<div class="container container_simori mt-5 p-4">
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="text-primary">
@@ -17,7 +18,6 @@
                         <th><i class="bi bi-code-slash"></i> Prefixo</th>
                         <th><i class="bi bi-link-45deg"></i> Schema (XSD)</th>
                         <th><i class="bi bi-diagram-3"></i> Namespace</th>
-                        <th class="text-center"><i class="bi bi-calendar-event"></i> Criado em</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,9 +49,7 @@
                                     <span class="text-muted">—</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-center text-muted small">
-                                <?= date('d/m/Y H:i', strtotime($f['created_at'])) ?>
-                            </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -62,4 +60,5 @@
             <i class="bi bi-exclamation-triangle"></i> Nenhum formato encontrado para este repositório.
         </div>
     <?php endif; ?>
+</div>
 </div>
