@@ -126,44 +126,8 @@ class Repository extends BaseController
             return redirect()->to('/repository')->with('error', 'Repositório não encontrado.');
         }
 
-        $url = $Data['rp_url'];
-        $type = $Data['rp_plataforma'];
 
-        switch ($type) {
-            case 'DSpace':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
-                break;
-            case 'DSpace7+':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'server/oai/request';
-                break;
-            case 'DSpace-CRIS':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
-                break;
-            case 'DSpace-XMLUI':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai/request';
-                break;
-            case 'EPrints':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'cgi/oai2';
-                break;
-            case 'Dataverse':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
-                break;
-            case 'Omeka-S':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
-                break;
-            case 'OJS':
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'oai';
-                break;                
-            case 'Fedora':
-                // Exemplo: https://example.com/fedora/oai?verb=Identify
-                $url .= (str_ends_with($url, '/') ? '' : '/') . 'fedora/oai';
-                break;
-            case 'Outros':
-                // Manter a URL como está
-                break;
-            default:
-                return redirect()->to('/repository')->with('error', 'Plataforma desconhecida.');
-        }
+        $url = $Data['rp_url_oai'];
 
         if (url_exists($url) === false) {
             echo "ERRO " . $GLOBALS['url_exists_error'];
@@ -321,8 +285,10 @@ class Repository extends BaseController
     public function show($id)
     {
         $Repo = new \App\Models\RepositoryModel();
+        $OaiMetaFormate = new \App\Models\OaiMetadataFormatModel();
         $data['repo'] = $Repo->find($id);
         $data['repo']['rp_summary'] = $Repo->get_summary($id);
+        $data['formats'] = $OaiMetaFormate->tags($id);
         $RSP = view('layout/header');
         $RSP .= view('layout/navbar');
         $RSP .= view('repository/show', $data);
@@ -331,6 +297,13 @@ class Repository extends BaseController
     }
 
     /*********** OAI */
+
+    public function harvesting_listdataformat($id)
+        {
+            $OaiMetaFormate = new \App\Models\OaiMetadataFormatModel();
+            $OaiMetaFormate->harvestingDataFormat($id);
+            return redirect()->to('/repository/view/' . $id);
+        }
     /* Identify */
 
     public function harvestingOAIrecords($id)
@@ -398,6 +371,19 @@ class Repository extends BaseController
         }
     }
 
+    public function formats($id)
+        {
+            $repositorioModel = new \App\Models\RepositorioModel();
+            $data['r'] = $repositorioModel->where('repository_id', $id)->first();            
+
+            // envia o ID do repositório para referência
+            $data['identify_id'] = $id;
+            $html = view('layout/header', $data);
+            $html .= view('layout/navbar', $data);
+            $html .= view('repository/view_format', $data);            
+            return $html . view('repository/setspec/sets', $data);
+        }
+
     public function views($id)
     {
         $SummaeryModel = new \App\Models\SummaryModel();
@@ -428,6 +414,8 @@ class Repository extends BaseController
         $data['stats']['total_records_coletados'] = $total['d_valor'] ?? 0;
         $total = $SummaeryModel->getIndicator($ind[3], $id);
         $data['stats']['total_records_deleted'] = $total['d_valor'] ?? 0;
+
+        $data['stats']['formats_oai'] = 10;
         //$data['stats']['ultima_coleta'] = max(array_column($data['sets'], 'last_collected'));
         //$data['stats']['total_autores'] = count(array_unique(array_column($data['sets'], 'author')));
         //$data['stats']['total_keywords'] = count(array_unique(array_column($data['sets'], 'keywords')));

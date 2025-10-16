@@ -27,6 +27,12 @@ body {
     text-decoration: underline;
 }
 
+.link2 {
+    color: #e56103;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .container_simori {
     margin-top: 20px;
     margin-bottom: 20px;

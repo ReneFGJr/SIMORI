@@ -58,6 +58,10 @@
                             <i class="bi bi-eye"></i> Coletar Registers
                         </a>
 
+                        <a href="<?= base_url('/oai/listmetadataformats/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> Coletar ListFormats
+                        </a>                        
+
                         <a href="<?= base_url('/oai/sets/' . $r['repository_id']) ?>" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye"></i> Coletar Sets
                         </a>

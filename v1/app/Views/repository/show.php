@@ -88,8 +88,26 @@
                             <a href="<?= base_url('/repository/creator/' . $repo['id_rp']) ?>" class="btn btn-outline-success">
                                 <i class="bi bi-list"></i> Criadores/Author
                             </a>
+                        <?php endif; ?>                        
+                    </div>
+
+                    <!-- Formats -->
+
+                    <div class="mt-3">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-diagram-3 text-primary"></i> Formats:
+                        </h6>
+                        <?php if (!empty($formats)) : ?>
+                            <?php foreach ($formats as $f): ?>
+                                <span class="badge bg-primary me-1 mb-1">
+                                    <?= esc($f['metadata_prefix']); ?>
+                                </span>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <span class="text-muted fst-italic">Nenhum formato encontrado</span>
                         <?php endif; ?>
                     </div>
+
                 </div>
 
                 <!-- COLUNA DIREITA -->
