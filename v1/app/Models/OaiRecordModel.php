@@ -27,7 +27,7 @@ class OaiRecordModel extends Model
     protected $returnType = 'array';
 
     // Regras de validação (opcional)
-    protected $validationRules = [ ];
+    protected $validationRules = [];
 
     protected $validationMessages = [];
     protected $skipValidation     = false;
@@ -78,18 +78,18 @@ class OaiRecordModel extends Model
 
         $records = $Record
             ->where('repository', $repo_id)
-            ->where('status',1)
-            ->where('deleted',0)
-            ->where('harvesting',1)
+            ->where('status', 1)
+            ->where('deleted', 0)
+            ->where('harvesting', 1)
             ->where('xml IS NOT NULL', null, false)
             ->findAll();
 
-       // 🔹 3. Para cada registro, baixa o XML via GetRecord
+        // 🔹 3. Para cada registro, baixa o XML via GetRecord
         $tot = 0;
         foreach ($records as $r) {
             $tot++;
-            $msg = 'Processando registro ID '.$tot.'/'.count($records).'<br>';
-            echo '<script>logDiv.innerHTML = "'.$msg.'";</script>' . chr(13);
+            $msg = 'Processando registro ID ' . $tot . '/' . count($records) . '<br>';
+            echo '<script>logDiv.innerHTML = "' . $msg . '";</script>' . chr(13);
             flush();
 
             $identifier = trim($r['oai_identifier']);
@@ -99,12 +99,11 @@ class OaiRecordModel extends Model
                 ->where('set_spec', $setSpecName)
                 ->first()['id'] ?? '';
             if ($identifier == '') continue;
-            $msg.= "🔹 Processando: <code>{$identifier}</code><br>";
+            $msg .= "🔹 Processando: <code>{$identifier}</code><br>";
             $msg .= "setSpec: <code>{$setSpecName}</code> (ID: {$setSpec})<br>";
             $OaiTriplesModel->extract_triples($r, $setSpec, $repo_id);
 
             $Record->set(['harvesting' => 2])->where('id', $r['id'])->update();
-
         }
 
         $msg = "<hr>🏁 Extração finalizada para o repositório.";
@@ -129,8 +128,8 @@ class OaiRecordModel extends Model
 
         $records = $Record
             ->where('repository', $repo_id)
-            ->where('status',0)
-            ->where('deleted',0)
+            ->where('status', 0)
+            ->where('deleted', 0)
             ->findAll();
 
         $oaiUrl = rtrim($repo['base_url'], '/');
@@ -147,7 +146,7 @@ class OaiRecordModel extends Model
             $this->getRegister($oaiUrl, $identifier, $r);
 
             echo '<script>';
-            echo 'logDiv.innerHTML = "✅ XML salvo para <b>'.$identifier.'</b><br><br>";  ';
+            echo 'logDiv.innerHTML = "✅ XML salvo para <b>' . $identifier . '</b><br><br>";  ';
             echo '</script>';
             echo "";
             flush();
@@ -156,7 +155,7 @@ class OaiRecordModel extends Model
         }
 
         echo "<hr>🏁 Coleta finalizada para o repositório.";
-        echo '<br><a href="'.base_url('repository/show/'.$repo_id).'" class="btn btn-sm btn-outline-primary mt-3"><i class="bi bi-arrow-left"></i> Voltar ao Repositório</a>';
+        echo '<br><a href="' . base_url('repository/show/' . $repo_id) . '" class="btn btn-sm btn-outline-primary mt-3"><i class="bi bi-arrow-left"></i> Voltar ao Repositório</a>';
         flush();
 
         // Atualiza estatísticas
@@ -168,69 +167,105 @@ class OaiRecordModel extends Model
      */
     private function get_xml($url)
     {
-        $ch = curl_init($url);
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_TIMEOUT => 60
-        ]);
-        $output = curl_exec($ch);
-        $err = curl_error($ch);
-        curl_close($ch);
+        $maxRetries = 3;
+        $retryDelay = 2; // segundos
+        $attempt = 0;
+        $output = null;
+        $httpCode = 0;
 
-        if ($err) {
-            echo "Erro CURL: $err";
+        do {
+            $attempt++;
+
+            $ch = curl_init($url);
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_TIMEOUT => 60,
+                CURLOPT_FAILONERROR => false
+            ]);
+
+            $output = curl_exec($ch);
+            $err = curl_error($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($err) {
+                echo "⚠️ Erro CURL (tentativa {$attempt}): $err<br>";
+            } elseif ($httpCode >= 400) {
+                echo "⚠️ Erro HTTP {$httpCode} em {$url} (tentativa {$attempt})<br>";
+            }
+
+            // Se sucesso (HTTP 200 e sem erro), sai do loop
+            if (!$err && $httpCode == 200 && $output) {
+                break;
+            }
+
+            // Aguarda antes de tentar de novo
+            if ($attempt < $maxRetries) {
+                sleep($retryDelay);
+            }
+        } while ($attempt < $maxRetries);
+
+        // Se falhou após as tentativas
+        if (!$output || $httpCode >= 400) {
+            $logMsg = sprintf(
+                "[%s] Falha ao coletar %s | HTTP %d | Erro: %s\n",
+                date('Y-m-d H:i:s'),
+                $url,
+                $httpCode,
+                $err ?: 'sem mensagem'
+            );
+
+            file_put_contents(WRITEPATH . 'logs/oai_errors.log', $logMsg, FILE_APPEND);
+
             return null;
         }
+
         return $output;
     }
 
     function make_stats($id)
-        {
-            $SummaryModel = new \App\Models\SummaryModel();
-            $SummaryModel->where('d_repository',$id)->delete();
+    {
+        $SummaryModel = new \App\Models\SummaryModel();
+        $SummaryModel->where('d_repository', $id)->delete();
 
-            $OAIset = new \App\Models\OaiSetModel();
-            $sets = $OAIset->select('count(*) as total')->where('identify_id', $id)->first();
+        $OAIset = new \App\Models\OaiSetModel();
+        $sets = $OAIset->select('count(*) as total')->where('identify_id', $id)->first();
 
-            $SummaryModel->register('sets',$sets['total'], $id);
+        $SummaryModel->register('sets', $sets['total'], $id);
 
 
-            $OAIrecord = new \App\Models\OaiRecordModel();
-            $sets = $OAIrecord->select('count(*) as total')->where('repository', $id)->first();
-            $SummaryModel->register('records', $sets['total'], $id);
+        $OAIrecord = new \App\Models\OaiRecordModel();
+        $sets = $OAIrecord->select('count(*) as total')->where('repository', $id)->first();
+        $SummaryModel->register('records', $sets['total'], $id);
 
-            $sets = $OAIrecord->select('count(*) as total, status, deleted')
-                    ->where('repository', $id)
-                    ->groupBy('status,deleted')
-                    ->findAll();
-            foreach($sets as $s)
-                {
-                    $SummaryModel->register('regs_'.$s['status'].'_'.$s['deleted'], $s['total'], $id);
-                }
-            /* Dados estatísticos dos triples */
-            $OAItriples = new \App\Models\OaiTriplesModel();
-            $sets = $OAItriples->select('count(*) as total, property, value')
-                    ->where('repository_id', $id)
-                    ->groupBy('property, value')
-                    ->findAll();
-            $setsR = [];
-            foreach($sets as $s)
-                {
-                    if (!isset($setsR[$s['property']]))
-                        {
-                            $setsR[$s['property']] = 0;
-                        }
-                    $setsR[$s['property']]++;
-                }
-            foreach($setsR as $k=>$v)
-                {
-                    $SummaryModel->register('triples_'.$k, $v, $id);
-                }
-            return 0;
+        $sets = $OAIrecord->select('count(*) as total, status, deleted')
+            ->where('repository', $id)
+            ->groupBy('status,deleted')
+            ->findAll();
+        foreach ($sets as $s) {
+            $SummaryModel->register('regs_' . $s['status'] . '_' . $s['deleted'], $s['total'], $id);
         }
+        /* Dados estatísticos dos triples */
+        $OAItriples = new \App\Models\OaiTriplesModel();
+        $sets = $OAItriples->select('count(*) as total, property, value')
+            ->where('repository_id', $id)
+            ->groupBy('property, value')
+            ->findAll();
+        $setsR = [];
+        foreach ($sets as $s) {
+            if (!isset($setsR[$s['property']])) {
+                $setsR[$s['property']] = 0;
+            }
+            $setsR[$s['property']]++;
+        }
+        foreach ($setsR as $k => $v) {
+            $SummaryModel->register('triples_' . $k, $v, $id);
+        }
+        return 0;
+    }
     function register($s)
     {
         if (!isset($s['repository_id']) || !isset($s['identifier'])) {
